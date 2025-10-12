@@ -62,21 +62,25 @@
       };
 
       homeConfigurations.Jon = home-manager.lib.homeManagerConfiguration {
-        home.username = "Jon";
-        home.homeDirectory = "/Users/Admin";
-        home.stateVersion = "25.11-pre";
         pkgs = import nixpkgs {
           system = "aarch64-darwin";
           config.allowUnfree = true;
         };
         modules = [
-          nixvim.homeModules.nixvim
-          ./home/shared/default.nix
-          ./home/shared/nixvim.nix
-          ./home/shared/zellij.nix
-          ./home/shared/zsh.nix
-          inputs.nix-colors.homeManagerModules.default
+          {
+            home.username = "Jon";
+            home.homeDirectory = "/Users/Admin";
+            home.stateVersion = "25.05";
+            imports = [
+              ./home/shared/default.nix
+              ./home/shared/nixvim.nix
+              ./home/shared/zellij.nix
+              ./home/shared/zsh.nix
+              inputs.nix-colors.homeManagerModules.default
+            ];
+          }
         ];
+        extraSpecialArgs = { inherit inputs; };
       };
     };
 }
