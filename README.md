@@ -1,16 +1,33 @@
 # nix-dots
 
-Personal system config.
+Personal system config. By no means the most elegant way of doing this.
+
+Heuristics:
+
+- correct
+- stable
+- simple
+- modular
 
 ## Platforms
 
-- NixOS
-- darwin
+- NixOS desktop
+- NixOS headless (wsl, server)
+- darwin home manager (standalone)
+- x86-64_linux home manager (standalone)
 
-## Tooling
+## Major Tooling
 
-- home-manager
 - zsh
 - zellij
 - nvim
 
+## Setup
+
+[Install nix][https://nixos.org/download/], preferrably multi-user if permissable.
+
+Run the relevant command for your use case.
+
+| NixOS Desktop | NixOS Headless | Darwin Home Manager | x86-64_linux Home Manager |
+| ------------- | -------------- | ------------------- | ------------------------- |
+| TODO: add     | TODO: add      | TODO: add           | TODO: add                 |

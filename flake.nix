@@ -59,28 +59,84 @@
             }
           ];
         };
+
+        nixos-wsl = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+
+          modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.${user} = {
+                  home.username = "jon";
+                  home.homeDirectory = "/home/jon";
+                  home.stateVersion = "25.05";
+                  imports = [
+                    ./home/shared/default.nix
+                    ./home/shared/nixvim.nix
+                    ./home/shared/zellij.nix
+                    ./home/shared/zsh.nix
+                    inputs.nix-colors.homeManagerModules.default
+                  ];
+                };
+                extraSpecialArgs = { inherit inputs; };
+              };
+            }
+          ];
+        };
       };
 
-      homeConfigurations.Jon = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "aarch64-darwin";
-          config.allowUnfree = true;
+      homeConfigurations = {
+        darwin = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "aarch64-darwin";
+            config.allowUnfree = true;
+          };
+          modules = [
+            {
+              home.username = "Jon";
+              home.homeDirectory = "/Users/Admin";
+              home.stateVersion = "25.05";
+              imports = [
+                ./home/shared/default.nix
+                ./home/shared/nixvim.nix
+                ./home/shared/zellij.nix
+                ./home/shared/zsh.nix
+                inputs.nix-colors.homeManagerModules.default
+              ];
+            }
+          ];
+          extraSpecialArgs = { inherit inputs; };
         };
-        modules = [
-          {
-            home.username = "Jon";
-            home.homeDirectory = "/Users/Admin";
-            home.stateVersion = "25.05";
-            imports = [
-              ./home/shared/default.nix
-              ./home/shared/nixvim.nix
-              ./home/shared/zellij.nix
-              ./home/shared/zsh.nix
-              inputs.nix-colors.homeManagerModules.default
-            ];
-          }
-        ];
-        extraSpecialArgs = { inherit inputs; };
+
+        linux-generic-headless = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          modules = [
+            {
+              targets.genericLinux.enable = true;
+              home.username = "jon";
+              home.homeDirectory = "/home/jon";
+              home.stateVersion = "25.05";
+              imports = [
+                ./home/shared/default.nix
+                ./home/shared/nixvim.nix
+                ./home/shared/zellij.nix
+                ./home/shared/zsh.nix
+                inputs.nix-colors.homeManagerModules.default
+              ];
+            }
+          ];
+          extraSpecialArgs = { inherit inputs; };
+        };
       };
     };
 }
