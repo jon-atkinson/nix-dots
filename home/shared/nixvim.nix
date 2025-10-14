@@ -302,7 +302,6 @@ in
             end
           '';
           sources = [
-            { name = "copilot"; }
             { name = "nvim_lsp"; }
             { name = "luasnip"; }
             { name = "buffer"; }
@@ -315,7 +314,6 @@ in
       cmp-nvim-lsp.enable = true;
       cmp_luasnip.enable = true;
       friendly-snippets.enable = true;
-      copilot-cmp.enable = true;
       luasnip.enable = true;
       lspkind.enable = true;
       harpoon.enable = true;
@@ -350,7 +348,6 @@ in
     ];
 
     lsp.servers = {
-      copilot.enable = true;
       gopls = {
         enable = true;
         config = {
