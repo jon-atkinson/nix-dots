@@ -24,7 +24,7 @@ Heuristics:
 
 ## Setup
 
-[Install nix][https://nixos.org/download/], preferrably multi-user if permissable.
+[Install nix](https://nixos.org/download/), preferrably multi-user if permissable.
 
 Run the relevant command for your use case.
 
