@@ -31,7 +31,7 @@ Run the relevant command for your use case.
 | NixOS Desktop | NixOS Headless | Darwin Home Manager | x86-64_linux Home Manager |
 | ------------- | -------------- | ------------------- | ------------------------- |
 
-| `sudo nixos-rebuild switch --flake github:jon-atkinson/nix-dots#nixos-wm --extra-experimental-features nix-command --extra-experimental-features flakes` | `sudo nixos-rebuild switch --flake github:jon-atkinson/nix-dots#nixos-wsl --extra-experimental-features nix-command --extra-experimental-features flakes` | `nix run github:jon-atkinson/nix-dots#homeConfigurations.darwin.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes` | `nix run github:jon-atkinson/nix-dots#homeConfigurations.linux-generic-headless.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes` |
+| <pre>sudo nixos-rebuild switch<br>--flake github:jon-atkinson/nix-dots#nixos-wm<br>--extra-experimental-features nix-command<br>--extra-experimental-features flakes</pre>|<pre>sudo nixos-rebuild switch<br>--flake github:jon-atkinson/nix-dots#nixos-wsl<br>--extra-experimental-features nix-command<br>--extra-experimental-features flakes</pre> | <pre>nix run github:jon-atkinson/nix-dots#homeConfigurations.darwin.activationPackage<br>--extra-experimental-features nix-command<br>--extra-experimental-features flakes</pre> | <pre>nix run github:jon-atkinson/nix-dots#homeConfigurations.linux-generic-headless.activationPackage<br>--extra-experimental-features nix-command<br>--extra-experimental-features flakes</pre> |
 
 Finally, update the default shell to zsh.
 
