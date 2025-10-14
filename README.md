@@ -30,4 +30,4 @@ Run the relevant command for your use case.
 
 | NixOS Desktop | NixOS Headless | Darwin Home Manager | x86-64_linux Home Manager                                                                                                                                                                 |
 | ------------- | -------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TODO: add     | TODO: add      | TODO: add           | nix run github:jon-atkinson/nix-dots#homeConfigurations.linux-generic-headless.activationPackage \\\n --extra-experimental-features nix-command \\\n --extra-experimental-features flakes |
+| TODO: add     | TODO: add      | TODO: add           | ```nix run github:jon-atkinson/nix-dots#homeConfigurations.linux-generic-headless.activationPackage --extra-experimental-features nix-command --extra-experimental-features flakes``` |
