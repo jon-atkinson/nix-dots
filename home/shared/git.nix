@@ -3,4 +3,7 @@
 }:
 
 {
+  programs.git = {
+    enable = true;
+  };
 }
