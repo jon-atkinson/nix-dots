@@ -385,6 +385,7 @@ in
       ts_ls.enable = true;
       pyright.enable = true;
       terraform_lsp.enable = true;
+      bashls.enable = true;
     };
     extraConfigLua = ''
       require("venv-selector").setup({
