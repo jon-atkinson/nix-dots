@@ -131,7 +131,6 @@
                 ./home/shared/nixvim.nix
                 ./home/shared/zellij.nix
                 ./home/shared/zsh.nix
-                ./home/mm/zsh-extras.nix
                 inputs.nix-colors.homeManagerModules.default
               ];
             }
