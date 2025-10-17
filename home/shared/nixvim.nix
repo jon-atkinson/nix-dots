@@ -244,14 +244,14 @@ in
       {
         mode = "n";
         key = "gi";
-        action = "<cmd>vim.lsp.buf.implementation()<CR>";
+        action = "<cmd>lua vim.lsp.buf.implementation()<CR>";
         options.desc = "Go to implementation";
       }
       {
         mode = "n";
         key = "gt";
-        action = "<cmd>vim.lsp.buf.type_definition()<CR>";
-        options.desc = "Go to implementation";
+        action = "<cmd>lua vim.lsp.buf.type_definition()<CR>";
+        options.desc = "Go to type definition";
       }
     ];
 
