@@ -271,6 +271,22 @@ in
     };
 
     plugins = {
+      trouble = {
+        enable = true;
+        settings = {
+          modes = {
+            lsp_references = {
+              params = {
+                include_declaration = true;
+                include_current = true;
+              };
+            };
+          };
+        };
+        luaConfig.pre = ''
+          useDiagnosticSigns = true;
+        '';
+      };
       lexima.enable = true;
       lualine.enable = true;
       telescope.enable = true;
