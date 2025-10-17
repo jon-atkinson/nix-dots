@@ -241,6 +241,18 @@ in
         action = "<cmd>LspRestart<CR>";
         options.desc = "Restart LSP";
       }
+      {
+        mode = "n";
+        key = "gi";
+        action = "<cmd>vim.lsp.buf.implementation()<CR>";
+        options.desc = "Go to implementation";
+      }
+      {
+        mode = "n";
+        key = "gt";
+        action = "<cmd>vim.lsp.buf.type_definition()<CR>";
+        options.desc = "Go to implementation";
+      }
     ];
 
     colorschemes = {
