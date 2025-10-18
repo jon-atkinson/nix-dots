@@ -283,6 +283,7 @@ in
     };
 
     plugins = {
+      gitgutter.enable = true;
       trouble = {
         enable = true;
         settings = {
