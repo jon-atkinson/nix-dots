@@ -407,7 +407,10 @@ in
       };
       lua_ls.enable = true;
       nixd.enable = true;
-      nil_ls.enable = true;
+      nil_ls = {
+        enable = true;
+        settings.nix.flake.autoArchive = true;
+      };
       clangd.enable = true;
       html.enable = true;
       ts_ls.enable = true;
