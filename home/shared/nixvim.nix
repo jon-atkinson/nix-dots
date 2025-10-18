@@ -1,8 +1,9 @@
 {
+  lib,
   inputs,
   config,
   pkgs,
-  lib,
+  mode,
   ...
 }:
 
@@ -335,6 +336,9 @@ in
             { name = "luasnip"; }
             { name = "buffer"; }
             { name = "path"; }
+          ]
+          ++ lib.optionals (mode == "personal") [
+            { name = "copilot"; }
           ];
         };
       };
@@ -343,6 +347,7 @@ in
       cmp-nvim-lsp.enable = true;
       cmp_luasnip.enable = true;
       friendly-snippets.enable = true;
+      copilot-cmp.enable = lib.mkIf (mode == "personal") true;
       luasnip.enable = true;
       lspkind.enable = true;
       harpoon.enable = true;
@@ -377,6 +382,7 @@ in
     ];
 
     lsp.servers = {
+      copilot.enable = lib.mkIf (mode == "personal") true;
       gopls = {
         enable = true;
         config = {
@@ -407,7 +413,10 @@ in
         };
       };
       lua_ls.enable = true;
-      nixd.enable = true;
+      nixd = {
+        enable = true;
+        config.nix.flake.autoArchive = true;
+      };
       nil_ls = {
         enable = true;
         config.nix.flake.autoArchive = true;

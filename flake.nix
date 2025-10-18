@@ -1,5 +1,5 @@
 {
-  description = "nix config";
+  description = "Jon's nix config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
@@ -21,6 +21,9 @@
       nvim-config,
       ...
     }@inputs:
+    {
+      mode ? "personal",
+    }:
     let
       user = "jon";
     in
@@ -51,11 +54,11 @@
                     ./home/shared/nixvim.nix
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
-                    ./home/shared/plocate.nix
+                    ./home/nixos/plocate.nix
                     inputs.nix-colors.homeManagerModules.default
                   ];
                 };
-                extraSpecialArgs = { inherit inputs; };
+                extraSpecialArgs = { inherit inputs mode; };
               };
             }
           ];
@@ -83,11 +86,11 @@
                     ./home/shared/nixvim.nix
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
-                    ./home/shared/plocate.nix
+                    ./home/nixos/plocate.nix
                     inputs.nix-colors.homeManagerModules.default
                   ];
                 };
-                extraSpecialArgs = { inherit inputs; };
+                extraSpecialArgs = { inherit inputs mode; };
               };
             }
           ];
@@ -114,7 +117,7 @@
               ];
             }
           ];
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs mode; };
         };
 
         linux-generic-headless = home-manager.lib.homeManagerConfiguration {
@@ -133,12 +136,11 @@
                 ./home/shared/nixvim.nix
                 ./home/shared/zellij.nix
                 ./home/shared/zsh.nix
-                ./home/mm/zsh-extras.nix
                 inputs.nix-colors.homeManagerModules.default
               ];
             }
           ];
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs mode; };
         };
       };
     };
