@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -31,4 +31,5 @@
 
   programs.home-manager.enable = true;
   programs.uv.enable = true;
+  services.locate.enable = lib.mkIf pkgs.stdenv.isLinux true;
 }
