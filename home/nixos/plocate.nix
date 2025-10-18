@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     plocate
   ];
-  home.services.plocate = {
+  services.plocate = {
     enable = true;
     updateInterval = "daily";
   };

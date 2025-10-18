@@ -19,11 +19,9 @@ Heuristics: correct, stable, simple, modular
 
 ## Setup
 
-1. Select the correct branch for your use case.
+1. [Install nix](https://nixos.org/download/), preferrably multi-user if permissable.
 
-2. [Install nix](https://nixos.org/download/), preferrably multi-user if permissable.
-
-3. Run the relevant install command for your use case.
+2. Run the relevant install command for your use case.
 
 | System               | Personal                                                                                                                                                                                        | Work                                                                                                                                                                                                      |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +30,7 @@ Heuristics: correct, stable, simple, modular
 | nixos desktop (hypr) | <pre>sudo nixos-rebuild switch \\<br>--flake github:jon-atkinson/nix-dots#nixos-wm \\<br>--extra-experimental-features nix-command \\<br>--extra-experimental-features flakes</pre>             | <pre>sudo nixos-rebuild switch \\<br>--flake "github:jon-atkinson/nix-dots?ref=telemetry-free#nixos-wm" \\<br>--extra-experimental-features nix-command \\<br>--extra-experimental-features flakes</pre>  |
 | nixos headless (wsl) | <pre>sudo nixos-rebuild switch \\<br>--flake github:jon-atkinson/nix-dots#nixos-wsl \\<br>--extra-experimental-features nix-command \\<br>--extra-experimental-features flakes</pre>            | <pre>sudo nixos-rebuild switch \\<br>--flake "github:jon-atkinson/nix-dots?ref=telemetry-free#nixos-wsl" \\<br>--extra-experimental-features nix-command \\<br>--extra-experimental-features flakes</pre> |
 
-4. Finally, update the default shell to zsh.
+3. Finally, update the default shell to zsh.
 
 ```
 sudo chsh -s $(which zsh) $USER

@@ -82,7 +82,7 @@
     in
     {
       nixosConfigurations = {
-        nixos-laptop =
+        nixos-wm =
           mkNixosSystem "personal" "x86_64-linux"
             [ ./hosts/nixos-laptop.nix ]
             [ ./home/nixos/hyprland.nix ];
