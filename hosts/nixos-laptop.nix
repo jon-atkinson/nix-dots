@@ -64,8 +64,6 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  services.locate.enable = lib.mkIf pkgs.stdenv.isLinux true;
-
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
