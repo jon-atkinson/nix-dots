@@ -47,7 +47,7 @@ in
       incsearch = true;
       termguicolors = true;
       scrolloff = 8;
-      colorcolumn = "80,100";
+      colorcolumn = "80,100,120";
     };
 
     globals = {
