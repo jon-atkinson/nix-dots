@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -46,12 +41,4 @@
   };
 
   programs.uv.enable = true;
-
-  services.cron = {
-    enable = true;
-    systemCronJobs = lib.mkIf (!config.systemd.enable) [
-      # update plocate db @ 4am each morning
-      "0 4 * * * ${pkgs.plocate}/bin/updatedb"
-    ];
-  };
 }
