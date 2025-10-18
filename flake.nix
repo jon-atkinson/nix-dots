@@ -23,113 +23,12 @@
     }@inputs:
     let
       user = "jon";
-      mode =
-        let
-          m = builtins.getEnv "NIX_MODE";
-        in
-        if m != "" then m else "personal";
-    in
-    {
-      nixosConfigurations = {
-        nixos-wm = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-
-          modules = [
-            ./hosts/nixos-laptop.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = {
-                  home.username = "jon";
-                  home.homeDirectory = "/home/jon";
-                  home.stateVersion = "25.05";
-                  imports = [
-                    ./home/nixos/hyprland.nix
-                    ./home/nixos/fonts.nix
-                    ./home/shared/default.nix
-                    ./home/shared/nixvim.nix
-                    ./home/shared/zellij.nix
-                    ./home/shared/zsh.nix
-                    ./home/nixos/plocate.nix
-                    inputs.nix-colors.homeManagerModules.default
-                  ];
-                };
-                extraSpecialArgs = { inherit inputs mode; };
-              };
-            }
-          ];
-        };
-
-        nixos-wsl = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-
-          modules = [
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = {
-                  home.username = "jon";
-                  home.homeDirectory = "/home/jon";
-                  home.stateVersion = "25.05";
-                  imports = [
-                    ./home/shared/default.nix
-                    ./home/shared/nixvim.nix
-                    ./home/shared/zellij.nix
-                    ./home/shared/zsh.nix
-                    ./home/nixos/plocate.nix
-                    inputs.nix-colors.homeManagerModules.default
-                  ];
-                };
-                extraSpecialArgs = { inherit inputs mode; };
-              };
-            }
-          ];
-        };
-      };
-
-      homeConfigurations = {
-        darwin = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config.allowUnfree = true;
-          };
+      mkHomeConfig =
+        mode: pkgs:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
           modules = [
             {
-              home.username = "Jon";
-              home.homeDirectory = "/Users/Admin";
-              home.stateVersion = "25.05";
-              imports = [
-                ./home/shared/default.nix
-                ./home/shared/nixvim.nix
-                ./home/shared/zellij.nix
-                ./home/shared/zsh.nix
-                inputs.nix-colors.homeManagerModules.default
-              ];
-            }
-          ];
-          extraSpecialArgs = { inherit inputs mode; };
-        };
-
-        linux-generic-headless = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
-          modules = [
-            {
-              targets.genericLinux.enable = true;
               home.username = "jon";
               home.homeDirectory = "/home/jon";
               home.stateVersion = "25.05";
@@ -144,6 +43,127 @@
           ];
           extraSpecialArgs = { inherit inputs mode; };
         };
+    in
+    {
+      nixosConfigurations = {
+        # nixos-wm = nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   pkgs = import nixpkgs {
+        #     system = "x86_64-linux";
+        #     config.allowUnfree = true;
+        #   };
+
+        #   modules = [
+        #     ./hosts/nixos-laptop.nix
+        #     home-manager.nixosModules.home-manager
+        #     {
+        #       home-manager = {
+        #         useGlobalPkgs = true;
+        #         useUserPackages = true;
+        #         users.${user} = {
+        #           home.username = "jon";
+        #           home.homeDirectory = "/home/jon";
+        #           home.stateVersion = "25.05";
+        #           imports = [
+        #             ./home/nixos/hyprland.nix
+        #             ./home/nixos/fonts.nix
+        #             ./home/shared/default.nix
+        #             ./home/shared/nixvim.nix
+        #             ./home/shared/zellij.nix
+        #             ./home/shared/zsh.nix
+        #             ./home/nixos/plocate.nix
+        #             inputs.nix-colors.homeManagerModules.default
+        #           ];
+        #         };
+        #         extraSpecialArgs = { inherit inputs mode; };
+        #       };
+        #     }
+        #   ];
+        # };
+
+        # nixos-wsl = nixpkgs.lib.nixosSystem {
+        #   system = "x86_64-linux";
+        #   pkgs = import nixpkgs {
+        #     system = "x86_64-linux";
+        #     config.allowUnfree = true;
+        #   };
+
+        #   modules = [
+        #     home-manager.nixosModules.home-manager
+        #     {
+        #       home-manager = {
+        #         useGlobalPkgs = true;
+        #         useUserPackages = true;
+        #         users.${user} = {
+        #           home.username = "jon";
+        #           home.homeDirectory = "/home/jon";
+        #           home.stateVersion = "25.05";
+        #           imports = [
+        #             ./home/shared/default.nix
+        #             ./home/shared/nixvim.nix
+        #             ./home/shared/zellij.nix
+        #             ./home/shared/zsh.nix
+        #             ./home/nixos/plocate.nix
+        #             inputs.nix-colors.homeManagerModules.default
+        #           ];
+        #         };
+        #         extraSpecialArgs = { inherit inputs mode; };
+        #       };
+        #     }
+        #   ];
+        # };
+      };
+
+      homeConfigurations = {
+        darwin-personal = mkHomeConfig "personal" (import nixpkgs { system = "aarch64-darwin"; });
+        darwin-work = mkHomeConfig "work" (import nixpkgs { system = "aarch64-darwin"; });
+
+        linux-personal = mkHomeConfig "personal" (import nixpkgs { system = "x86_64-linux"; });
+        linux-work = mkHomeConfig "work" (import nixpkgs { system = "x86_64-linux"; });
+        # darwin = home-manager.lib.homeManagerConfiguration {
+        #   pkgs = import nixpkgs {
+        #     system = "aarch64-darwin";
+        #     config.allowUnfree = true;
+        #   };
+        #   modules = [
+        #     {
+        #       home.username = "Jon";
+        #       home.homeDirectory = "/Users/Admin";
+        #       home.stateVersion = "25.05";
+        #       imports = [
+        #         ./home/shared/default.nix
+        #         ./home/shared/nixvim.nix
+        #         ./home/shared/zellij.nix
+        #         ./home/shared/zsh.nix
+        #         inputs.nix-colors.homeManagerModules.default
+        #       ];
+        #     }
+        #   ];
+        #   extraSpecialArgs = { inherit inputs mode; };
+        # };
+
+        # linux-generic-headless = home-manager.lib.homeManagerConfiguration {
+        #   pkgs = import nixpkgs {
+        #     system = "x86_64-linux";
+        #     config.allowUnfree = true;
+        #   };
+        #   modules = [
+        #     {
+        #       targets.genericLinux.enable = true;
+        #       home.username = "jon";
+        #       home.homeDirectory = "/home/jon";
+        #       home.stateVersion = "25.05";
+        #       imports = [
+        #         ./home/shared/default.nix
+        #         ./home/shared/nixvim.nix
+        #         ./home/shared/zellij.nix
+        #         ./home/shared/zsh.nix
+        #         inputs.nix-colors.homeManagerModules.default
+        #       ];
+        #     }
+        #   ];
+        #   extraSpecialArgs = { inherit inputs mode; };
+        # };
       };
     };
 }
