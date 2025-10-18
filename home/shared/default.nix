@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
@@ -20,6 +25,7 @@
     fd
     tree
     rustup
+    plocate
 
     # formatters
     gofumpt
@@ -40,4 +46,12 @@
   };
 
   programs.uv.enable = true;
+
+  services.cron = {
+    enable = true;
+    systemCronJobs = lib.mkIf (!config.systemd.enable) [
+      # update plocate db @ 4am each morning
+      "0 4 * * * ${pkgs.plocate}/bin/updatedb"
+    ];
+  };
 }

@@ -176,6 +176,12 @@
     };
   };
 
+  # update locate db once daily (elsewhere configured as a cron job for non-nixos systems)
+  services.plocate = {
+    enable = true;
+    updateInterval = "daily";
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
