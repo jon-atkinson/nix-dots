@@ -69,7 +69,6 @@
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
                     ./home/nixos/fonts.nix
-                    ./home/nixos/plocate.nix
                     inputs.nix-colors.homeManagerModules.default
                   ]
                   ++ homeManagerModules;
