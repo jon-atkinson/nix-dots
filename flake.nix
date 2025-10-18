@@ -54,6 +54,7 @@
             config.allowUnfree = true;
           };
           modules = hostModules ++ [
+            ./nixos/default.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {

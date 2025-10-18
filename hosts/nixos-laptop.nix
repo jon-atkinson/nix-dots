@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 
@@ -63,6 +64,8 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.locate.enable = lib.mkIf pkgs.stdenv.isLinux true;
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -73,39 +76,39 @@
     pulse.enable = true;
   };
 
-  # Define a user account.
-  users.users.jon = {
-    isNormalUser = true;
-    description = "Jon Atkinson";
-    # openssh.authorizedKeys.keys = [];
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-      "audio"
-      "input"
-    ];
-    shell = pkgs.zsh;
-  };
+  # # Define a user account.
+  # users.users.jon = {
+  #   isNormalUser = true;
+  #   description = "Jon Atkinson";
+  #   # openssh.authorizedKeys.keys = [];
+  #   extraGroups = [
+  #     "networkmanager"
+  #     "wheel"
+  #     "docker"
+  #     "audio"
+  #     "input"
+  #   ];
+  #   shell = pkgs.zsh;
+  # };
 
   # Install firefox.
   programs.firefox.enable = true;
 
-  programs.zsh.enable = true;
+  # programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  # nix.settings.experimental-features = [
+  #   "nix-command"
+  #   "flakes"
+  # ];
 
   environment.systemPackages = with pkgs; [
-    nix-prefetch-git
+    # nix-prefetch-git
 
-    git
-    vim
-    wget
+    # git
+    # vim
+    # wget
     chromium
     discord
     wl-clipboard
@@ -168,13 +171,13 @@
   };
 
   # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-  };
+  # services.openssh = {
+  #   enable = true;
+  #   settings = {
+  #     PermitRootLogin = "no";
+  #     PasswordAuthentication = false;
+  #   };
+  # };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
