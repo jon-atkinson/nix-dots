@@ -20,7 +20,6 @@
     fd
     tree
     rustup
-    plocate
 
     # formatters
     gofumpt
