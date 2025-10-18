@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  lib,
   ...
 }:
 
@@ -24,6 +25,8 @@ in
     enable = true;
     defaultEditor = true;
     nixpkgs.config.allowUnfree = true;
+    # required to resolve a conflict between gitgutter and nixvim plugin
+    updatetime = lib.mkForce 50;
 
     opts = {
       number = true;
