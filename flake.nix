@@ -24,7 +24,7 @@
     let
       # user = "jon";
       mkHomeConfig =
-        mode: system:
+        mode: system: username: userhomedir:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
@@ -32,8 +32,8 @@
           };
           modules = [
             {
-              home.username = "Jon";
-              home.homeDirectory = "/Users/Admin";
+              home.username = username;
+              home.homeDirectory = userhomedir;
               home.stateVersion = "25.05";
               imports = [
                 ./home/shared/default.nix
@@ -118,11 +118,11 @@
       # };
 
       homeConfigurations = {
-        darwin-personal = mkHomeConfig "personal" "aarch64-darwin";
-        darwin-work = mkHomeConfig "work" "aarch64-darwin";
+        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/";
+        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/";
 
-        linux-personal = mkHomeConfig "personal" "x86_64-linux";
-        linux-work = mkHomeConfig "work" "x86_64-linux";
+        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/";
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/";
         # darwin = home-manager.lib.homeManagerConfiguration {
         #   pkgs = import nixpkgs {
         #     system = "aarch64-darwin";
