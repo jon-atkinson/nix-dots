@@ -51,6 +51,7 @@
                     ./home/shared/nixvim.nix
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
+                    ./home/shared/plocate.nix
                     inputs.nix-colors.homeManagerModules.default
                   ];
                 };
@@ -82,6 +83,7 @@
                     ./home/shared/nixvim.nix
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
+                    ./home/shared/plocate.nix
                     inputs.nix-colors.homeManagerModules.default
                   ];
                 };
