@@ -10,6 +10,7 @@
     nixvim.url = "github:nix-community/nixvim";
     nix-colors.url = "github:Misterio77/nix-colors";
     nvim-config.url = "github:jon-atkinson/nvimConfigs";
+    mode_arg.url = "path:./modes/default";
   };
 
   outputs =
@@ -19,13 +20,12 @@
       nixvim,
       nix-colors,
       nvim-config,
+      mode,
       ...
     }@inputs:
-    {
-      mode ? "personal",
-    }:
     let
       user = "jon";
+      mode = mode.mode;
     in
     {
       nixosConfigurations = {
