@@ -409,7 +409,7 @@ in
       nixd.enable = true;
       nil_ls = {
         enable = true;
-        settings.nix.flake.autoArchive = true;
+        config.nix.flake.autoArchive = true;
       };
       clangd.enable = true;
       html.enable = true;

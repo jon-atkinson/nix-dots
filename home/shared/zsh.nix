@@ -18,7 +18,7 @@
         "fzf"
       ];
     };
-    initExtra = ''
+    initContent = ''
       nv() {
         local file
         if command -v fd >/dev/null 2>&1; then
