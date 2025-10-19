@@ -32,6 +32,7 @@
           nvim "$file"
         fi
       }
+      alias vn=nv
     '';
     envExtra = lib.mkIf (mode == "work") ''
       # Add development tools to PATH
