@@ -6,5 +6,5 @@
 }:
 
 {
-  home.packages = lib.optional (mode == "work") [ pkgs.codex ];
+  home.packages = lib.optional (mode == "work") pkgs.codex;
 }
