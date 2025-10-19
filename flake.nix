@@ -39,6 +39,7 @@
                 ./home/shared/nixvim.nix
                 ./home/shared/zellij.nix
                 ./home/shared/zsh.nix
+                ./home/shared/codex.nix
                 inputs.nix-colors.homeManagerModules.default
               ];
             }
@@ -69,6 +70,7 @@
                     ./home/shared/nixvim.nix
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
+                    ./home/shared/codex.nix
                     ./home/nixos/fonts.nix
                     inputs.nix-colors.homeManagerModules.default
                   ]
