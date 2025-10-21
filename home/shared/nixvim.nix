@@ -383,6 +383,7 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
+      omnisharp.enable = true;
       gopls = {
         enable = true;
         config = {
@@ -413,13 +414,13 @@ in
         };
       };
       lua_ls.enable = true;
-      nixd = {
-        enable = true;
-        config.nix.flake.autoArchive = true;
-      };
+      nixd.enable = true;
       nil_ls = {
         enable = true;
-        config.nix.flake.autoArchive = true;
+        config.nix.flake = {
+          autoArchive = true;
+          autoEvalInputs = true;
+        };
       };
       clangd.enable = true;
       html.enable = true;
