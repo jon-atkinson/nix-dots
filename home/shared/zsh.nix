@@ -22,7 +22,14 @@
     };
     initContent = ''
       # Fuzzy find a file to open with NeoVim. Also add the `nvim <filename>` to history
-      alias nv='_NF=$(fzf) && history -s nvim $_NF && nvim $_NF; unset _NF'``
+      nv() {
+          local _NF
+          _NF=$(fzf) || return
+          print -s "nvim $_NF"
+          nvim "$_NF"
+          unset _NF
+          # fx -W
+      }
 
       alias vn=nv
 
