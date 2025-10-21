@@ -369,7 +369,7 @@ in
             python = [ "ruff_format" ];
           };
 
-          format_on_save = {
+          format_on_save = lib.mkIf (mode == "personal") {
             lsp_fallback = true;
             async = false;
             timeout_ms = 1000;
