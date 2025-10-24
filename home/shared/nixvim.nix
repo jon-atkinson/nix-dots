@@ -169,6 +169,12 @@ in
       }
       {
         mode = "n";
+        key = "grr";
+        action = "<cmd>Trouble lsp_references focus=true<cr>";
+        options.desc = "Show references";
+      }
+      {
+        mode = "n";
         key = "gD";
         action = "<cmd>lua vim.lsp.buf.declaration()<CR>";
         options.desc = "Go to declaration";
