@@ -19,7 +19,6 @@
     htop
     fd
     tree
-    rustup
 
     # formatters
     gofumpt
@@ -27,6 +26,10 @@
     stylua
     ruff
     nixfmt-rfc-style
+
+    # language toolchains
+    rustup
+    dotnet-sdk
   ];
 
   programs.home-manager.enable = true;
