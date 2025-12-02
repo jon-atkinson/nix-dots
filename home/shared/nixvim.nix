@@ -15,7 +15,7 @@ let
       owner = "linux-cultist";
       repo = "venv-selector.nvim";
       rev = "main";
-      sha256 = "sha256-m165YyY8VX0YQ5v6vxDJp4avDRrxByZQY+uMNkubggo";
+      sha256 = "sha256-+0bpYcb+sHzcxHxBLzNzeSFqk+hfkPhfmp0yxjuhbg4";
     };
   };
 in
