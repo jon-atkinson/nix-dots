@@ -35,8 +35,9 @@
 
       HISTORY_IGNORE="nv:ls:ll"
 
-      # set QHOME value
-      QHOME=$HOME/q
+      # setup q config
+      export QHOME=~/q
+      export PATH=~/q/m64/:$PATH
     '';
     envExtra = lib.mkIf (mode == "work") ''
       # Add MHS development tools to PATH
