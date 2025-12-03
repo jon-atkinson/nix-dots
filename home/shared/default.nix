@@ -19,6 +19,7 @@
     htop
     fd
     tree
+    rlwrap
 
     # formatters
     gofumpt
