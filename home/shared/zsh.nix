@@ -34,6 +34,9 @@
       alias vn=nv
 
       HISTORY_IGNORE="nv:ls:ll"
+
+      # set QHOME value
+      QHOME=$HOME/q
     '';
     envExtra = lib.mkIf (mode == "work") ''
       # Add MHS development tools to PATH
