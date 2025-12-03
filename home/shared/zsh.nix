@@ -38,6 +38,7 @@
       # setup q config
       export QHOME=~/q
       export PATH=~/q/m64/:$PATH
+      alias q="rlwrap -r q"
     '';
     envExtra = lib.mkIf (mode == "work") ''
       # Add MHS development tools to PATH
