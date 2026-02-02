@@ -41,6 +41,9 @@
       alias q="rlwrap -r q"
     '';
     envExtra = lib.mkIf (mode == "work") ''
+    # DEPLOYMENT setup
+    export VIVSPACK_ROOT=${HOME}/vivspack
+
     # NECTAR setup
     # Define local directories
     export NECTAR_DIR=$HOME/nectar
