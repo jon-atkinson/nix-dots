@@ -41,6 +41,10 @@
       alias q="rlwrap -r q"
     '';
     envExtra = lib.mkIf (mode == "work") ''
+    # CHAKRA setup
+    export PATH=$HOME/.dotnet:$PATH
+    export DOTNET_ROOT=$HOME/.dotnet
+
     # VIVSPACK setup
     # enable programmable completion features (you don't need to enable
     # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
