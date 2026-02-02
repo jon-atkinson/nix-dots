@@ -43,7 +43,7 @@
     envExtra = lib.mkIf (mode == "work") ''
     # NECTAR setup
     # Define local directories
-    export NECTAR_DIR=$HOME/repo/nectar
+    export NECTAR_DIR=$HOME/nectar
     export KDB_DIR=/data/kdb
     export RESEARCH_DIR=/data/research
     
