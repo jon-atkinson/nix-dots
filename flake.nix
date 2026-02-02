@@ -96,7 +96,7 @@
         darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/";
 
         linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/";
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
       };
     };
 }
