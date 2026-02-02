@@ -30,7 +30,7 @@
 
     # language toolchains
     rustup
-    dotnet-sdk
+    # dotnet-sdk
   ];
 
   programs.home-manager.enable = true;
