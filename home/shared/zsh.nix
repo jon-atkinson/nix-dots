@@ -36,9 +36,9 @@
       HISTORY_IGNORE="nv:ls:ll"
 
       # setup q config
-      export QHOME=~/q32
-      export PATH=~/q32/l32/:$PATH
-      alias q="rlwrap -r q32"
+      # export QHOME=~/q32
+      # PATH=~/q32/l32/:$PATH
+      # alias q="rlwrap -r q"
     '';
     envExtra = lib.mkIf (mode == "work") ''
     # CHAKRA setup
