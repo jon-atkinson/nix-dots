@@ -61,8 +61,8 @@
     # NECTAR setup
     # Define local directories
     export NECTAR_DIR=$HOME/nectar
-    export KDB_DIR=/data/kdb
-    export RESEARCH_DIR=/data/research
+    export KDB_DIR=~/olympus/data/kdb
+    export RESEARCH_DIR=~/olympus/data/research
     
     # Remote data sources
     export KDB_PROD_HOST=sy2-oly-app1
