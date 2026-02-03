@@ -93,7 +93,7 @@
     # q settings
     export DISABLE_TASKSET_FOR_Q=1
     export QINIT=$NECTAR_DIR/var/common/kdb/q.q
-    export PATH=$PATH:$QHOME
+    # export PATH=$PATH:$QHOME
     '';
   };
 }
