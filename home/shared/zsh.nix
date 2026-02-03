@@ -56,7 +56,7 @@
         . /etc/bash_completion
       fi
     fi
-    export VIVSPACK_ROOT=${HOME}/vivspack
+    export VIVSPACK_ROOT=$\{HOME}/vivspack
 
     # NECTAR setup
     # Define local directories
