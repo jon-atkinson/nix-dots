@@ -37,7 +37,7 @@
 
       # setup q config
       export QHOME=~/q32
-      export PATH=~/q/l32/:$PATH
+      export PATH=~/q32/l32/:$PATH
       alias q="rlwrap -r q32"
     '';
     envExtra = lib.mkIf (mode == "work") ''
