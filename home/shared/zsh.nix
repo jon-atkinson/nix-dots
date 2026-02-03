@@ -36,9 +36,9 @@
       HISTORY_IGNORE="nv:ls:ll"
 
       # setup q config
-      export QHOME=~/q
-      export PATH=~/q/m64/:$PATH
-      alias q="rlwrap -r q"
+      export QHOME=~/q32
+      export PATH=~/q/l32/:$PATH
+      alias q="rlwrap -r q32"
     '';
     envExtra = lib.mkIf (mode == "work") ''
     # CHAKRA setup
@@ -93,6 +93,7 @@
     # q settings
     export DISABLE_TASKSET_FOR_Q=1
     export QINIT=$NECTAR_DIR/var/common/kdb/q.q
+    export PATH=$PATH:$QHOME
     '';
   };
 }
