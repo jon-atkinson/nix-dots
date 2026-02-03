@@ -38,7 +38,6 @@
       # setup q config
       # export QHOME=~/q32
       # PATH=~/q32/l32/:$PATH
-      # alias q="rlwrap -r q"
     '';
     envExtra = lib.mkIf (mode == "work") ''
     # CHAKRA setup
@@ -71,9 +70,8 @@
     export KDB_DATA_DIR=/data/kdb
     export KDB_DATA_USER=olympusdata
     
-    # # KDB credentials
-    # export KDB_USER=username
-    # export KDB_PW=password
+    # KDB credentials
+    source $HOME/kdb_creds
     
     # KDB env
     source $NECTAR_DIR/var/common/etc/bashrc
