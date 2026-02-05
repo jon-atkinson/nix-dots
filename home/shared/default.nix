@@ -31,6 +31,9 @@
     # language toolchains
     rustup
     # dotnet-sdk
+
+    # work containerisation
+    podman
   ];
 
   programs.home-manager.enable = true;
