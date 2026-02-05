@@ -21,6 +21,9 @@
     tree
     rlwrap
 
+    # work
+    conda
+
     # formatters
     gofumpt
     nodePackages.prettier
