@@ -40,6 +40,8 @@
       # PATH=~/q32/l32/:$PATH
     '';
     envExtra = lib.mkIf (mode == "work") ''
+    alias conda=$HOME/miniconda/_conda
+
     # CHAKRA setup
     export PATH=$HOME/.dotnet:$PATH
     export DOTNET_ROOT=$HOME/.dotnet
