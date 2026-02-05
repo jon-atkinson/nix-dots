@@ -40,7 +40,9 @@
       # PATH=~/q32/l32/:$PATH
     '';
     envExtra = lib.mkIf (mode == "work") ''
+    # dwt setup
     alias envbase=source ~/miniconda/bin/activate
+    source $HOME/dwt/dwt-completion.bash
 
     # CHAKRA setup
     export PATH=$HOME/.dotnet:$PATH
