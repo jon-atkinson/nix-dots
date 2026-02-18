@@ -20,7 +20,7 @@
         "fzf"
       ];
     };
-    initContent = ''
+    initContent = lib.mkMerge [''
       # Fuzzy find a file to open with NeoVim. Also add the `nvim <filename>` to history
       nv() {
           local _NF
@@ -34,15 +34,13 @@
       alias vn=nv
 
       HISTORY_IGNORE="nv:ls:ll"
-
-      # setup q config
-      # export QHOME=~/q32
-      # PATH=~/q32/l32/:$PATH
-    '';
+    ''
+    (lib.mkIf (mode == "work") ''
+      # dwt setup
+      source $HOME/dwt/dwt-completion.bash
+    '')];
     envExtra = lib.mkIf (mode == "work") ''
-    # dwt setup
     alias envbase=source ~/miniconda/bin/activate
-    source $HOME/dwt/dwt-completion.bash
 
     # CHAKRA setup
     export PATH=$HOME/.dotnet:$PATH
