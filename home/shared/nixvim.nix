@@ -14,7 +14,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "linux-cultist";
       repo = "venv-selector.nvim";
-      rev = "main";
+      rev = "d4367f29df803e1fe79c0aa8e4c6250cd0ff0e5f";
       sha256 = "sha256-ZnFtEX6zUxanNVhchFmbXRjxnwUwJHQDB/HSt6aI6Fg";
     };
   };
