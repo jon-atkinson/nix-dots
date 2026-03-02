@@ -62,7 +62,7 @@
 
     # NECTAR setup
     # Define local directories
-    export NECTAR_DIR=$HOME/nectar
+    export NECTAR_DIR=$HOME/repo/nectar
     export KDB_DIR=~/olympus/data/kdb
     export RESEARCH_DIR=~/olympus/data/research
     
