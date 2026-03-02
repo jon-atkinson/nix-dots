@@ -38,9 +38,9 @@
     (lib.mkIf (mode == "work") ''
       # dwt setup
       source $HOME/dwt/dwt-completion.bash
-      source $HOME/zabbix_creds.sh
     '')];
     envExtra = lib.mkIf (mode == "work") ''
+    source $HOME/zabbix_creds.sh
     alias envbase=source ~/miniconda/bin/activate
 
     # CHAKRA setup
