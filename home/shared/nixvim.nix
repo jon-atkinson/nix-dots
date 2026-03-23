@@ -389,7 +389,7 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
-      omnisharp.enable = true;
+      roslyn_ls.enable = true;
       gopls = {
         enable = true;
         config = {
