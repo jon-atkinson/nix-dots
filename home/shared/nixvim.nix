@@ -276,7 +276,6 @@ in
       };
       catppuccin = {
         enable = false;
-        enable = false;
       };
       tokyonight = {
         enable = false;
