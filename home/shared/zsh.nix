@@ -47,17 +47,17 @@
     export PATH=$HOME/.dotnet:$PATH
     export DOTNET_ROOT=$HOME/.dotnet
 
-    # VIVSPACK setup
-    # enable programmable completion features (you don't need to enable
-    # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-    # sources /etc/bash.bashrc).
-    if ! shopt -oq posix; then
-      if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-      elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-      fi
-    fi
+    # # VIVSPACK setup
+    # # enable programmable completion features (you don't need to enable
+    # # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+    # # sources /etc/bash.bashrc).
+    # if ! shopt -oq posix; then
+    #   if [ -f /usr/share/bash-completion/bash_completion ]; then
+    #     . /usr/share/bash-completion/bash_completion
+    #   elif [ -f /etc/bash_completion ]; then
+    #     . /etc/bash_completion
+    #   fi
+    # fi
     export VIVSPACK_ROOT=$\{HOME}/vivspack
 
     # NECTAR setup
@@ -77,8 +77,8 @@
     source $HOME/kdb_creds
     
     # KDB env
-    source $NECTAR_DIR/var/common/etc/bashrc
-    source $NECTAR_DIR/var/common/kdb/env.sh
+    emulate bash -c 'source $NECTAR_DIR/var/common/etc/bashrc'
+    emulate bash -c 'source $NECTAR_DIR/var/common/kdb/env.sh'
     
     # Conda environments
     alias env-olympus='source $HOME/miniconda/bin/activate olympus'
