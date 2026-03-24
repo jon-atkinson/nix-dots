@@ -59,6 +59,8 @@
         # q settings
         export DISABLE_TASKSET_FOR_Q=1
         export QINIT=$NECTAR_DIR/var/common/kdb/q.q
+
+        unset PS1
       '')
     ];
     envExtra = lib.mkIf (mode == "work") ''
