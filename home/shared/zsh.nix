@@ -20,81 +20,61 @@
         "fzf"
       ];
     };
-    initContent = lib.mkMerge [''
-      # Fuzzy find a file to open with NeoVim. Also add the `nvim <filename>` to history
-      nv() {
-          local _NF
-          _NF=$(fzf) || return
-          print -s "nvim $_NF"
-          nvim "$_NF"
-          unset _NF
-          # fx -W
-      }
+    initContent = lib.mkMerge [
+      ''
+        # Fuzzy find a file to open with NeoVim. Also add the `nvim <filename>` to history
+        nv() {
+            local _NF
+            _NF=$(fzf) || return
+            print -s "nvim $_NF"
+            nvim "$_NF"
+            unset _NF
+            # fx -W
+        }
 
-      alias vn=nv
+        alias vn=nv
 
-      HISTORY_IGNORE="nv:ls:ll"
-    ''
-    (lib.mkIf (mode == "work") ''
-      # dwt setup
-      source $HOME/dwt/dwt-completion.bash
-    '')];
+        HISTORY_IGNORE="nv:ls:ll"
+      ''    
+      (lib.mkIf (mode == "work") ''
+        # dwt setup
+        source $HOME/dwt/dwt-completion.bash
+
+        # KDB env
+        emulate bash -c 'source $NECTAR_DIR/var/common/etc/bashrc'
+        emulate bash -c 'source $NECTAR_DIR/var/common/kdb/env.sh'
+
+        # Conda environments
+        alias env-olympus='source $HOME/miniconda/bin/activate olympus'
+        alias env-pt='source $HOME/miniconda/bin/activate pt'
+        alias envbase='source ~/miniconda/bin/activate'
+      
+        # Mosek settings
+        MOSEKPLATFORM=linux64x86
+        export PATH=$PATH:$NECTAR_DIR/opt/mosek/6/tools/platform/$MOSEKPLATFORM/bin
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NECTAR_DIR/opt/mosek/6/tools/platform/$MOSEKPLATFORM/bin
+        export MOSEKLM_LICENSE_FILE=$NECTAR_DIR/opt/mosek/6/licenses
+        export MOSEK_USE_NUMPY=1
+        
+        # q settings
+        export DISABLE_TASKSET_FOR_Q=1
+        export QINIT=$NECTAR_DIR/var/common/kdb/q.q
+      '')
+    ];
     envExtra = lib.mkIf (mode == "work") ''
-    source $HOME/zabbix_creds.sh
-    alias envbase=source ~/miniconda/bin/activate
-
-    # CHAKRA setup
-    export PATH=$HOME/.dotnet:$PATH
-    export DOTNET_ROOT=$HOME/.dotnet
-
-    # # VIVSPACK setup
-    # # enable programmable completion features (you don't need to enable
-    # # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-    # # sources /etc/bash.bashrc).
-    # if ! shopt -oq posix; then
-    #   if [ -f /usr/share/bash-completion/bash_completion ]; then
-    #     . /usr/share/bash-completion/bash_completion
-    #   elif [ -f /etc/bash_completion ]; then
-    #     . /etc/bash_completion
-    #   fi
-    # fi
-    export VIVSPACK_ROOT=$\{HOME}/vivspack
-
-    # NECTAR setup
-    # Define local directories
-    export NECTAR_DIR=$HOME/repo/nectar
-    export KDB_DIR=~/olympus/data/kdb
-    export RESEARCH_DIR=~/olympus/data/research
-    
-    # Remote data sources
-    export KDB_PROD_HOST=sy2-oly-app1
-    export KDB_PROD_DIR=/prod/kdb
-    export KDB_DATA_HOST=sy2-oly-app2
-    export KDB_DATA_DIR=/data/kdb
-    export KDB_DATA_USER=olympusdata
-    
-    # KDB credentials
-    source $HOME/kdb_creds
-    
-    # KDB env
-    emulate bash -c 'source $NECTAR_DIR/var/common/etc/bashrc'
-    emulate bash -c 'source $NECTAR_DIR/var/common/kdb/env.sh'
-    
-    # Conda environments
-    alias env-olympus='source $HOME/miniconda/bin/activate olympus'
-    alias env-pt='source $HOME/miniconda/bin/activate pt'
-    
-    # Mosek settings
-    MOSEKPLATFORM=linux64x86
-    export PATH=$PATH:$NECTAR_DIR/opt/mosek/6/tools/platform/$MOSEKPLATFORM/bin
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$NECTAR_DIR/opt/mosek/6/tools/platform/$MOSEKPLATFORM/bin
-    export MOSEKLM_LICENSE_FILE=$NECTAR_DIR/opt/mosek/6/licenses
-    export MOSEK_USE_NUMPY=1
-    
-    # q settings
-    export DISABLE_TASKSET_FOR_Q=1
-    export QINIT=$NECTAR_DIR/var/common/kdb/q.q
-    # export PATH=$PATH:$QHOME
+      source $HOME/zabbix_creds.sh
+      source $HOME/kdb_creds
+      export PATH=$HOME/.dotnet:$PATH
+      export DOTNET_ROOT=$HOME/.dotnet
+      export VIVSPACK_ROOT=$\{HOME}/vivspack
+      export NECTAR_DIR=$HOME/repo/nectar
+      export KDB_DIR=~/olympus/data/kdb
+      export RESEARCH_DIR=~/olympus/data/research
+      export KDB_PROD_HOST=sy2-oly-app1
+      export KDB_PROD_DIR=/prod/kdb
+      export KDB_DATA_HOST=sy2-oly-app2
+      export KDB_DATA_DIR=/data/kdb
+      export KDB_DATA_USER=olympusdata
     '';
   };
 }
