@@ -276,7 +276,7 @@ in
       };
       catppuccin = {
         enable = false;
-        autoLoad = true;
+;        enable = false;
       };
       tokyonight = {
         enable = false;
@@ -290,22 +290,6 @@ in
 
     plugins = {
       roslyn = {
-        enable = true;
-        config = {
-        config = {
-          config = {};
-        };
-        package = pkgs.roslyn-ls.overrideAttrs (old: {
-          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
-          postInstall = (old.postInstall or "") + ''
-            wrapProgram $out/lib/roslyn-ls/Microsoft.CodeAnalysis.LanguageServer \
-              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [
-                pkgs.openssl
-                pkgs.zlib
-              ]}
-          '';
-        });
-      };    
       gitgutter.enable = true;
       trouble = {
         enable = true;
@@ -405,6 +389,7 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
+      roslyn_ls.enable = true;
       gopls = {
         enable = true;
         config = {
@@ -460,4 +445,4 @@ in
       })
     '';
   };
-};
+}
