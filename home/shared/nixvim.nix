@@ -261,7 +261,6 @@ in
         options.desc = "Go to type definition";
       }
     ];
-
     colorschemes = {
       moonfly = {
         enable = true;
@@ -292,6 +291,10 @@ in
     plugins = {
       roslyn = {
         enable = true;
+        config = {
+        config = {
+          config = {};
+        };
         package = pkgs.roslyn-ls.overrideAttrs (old: {
           nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
           postInstall = (old.postInstall or "") + ''
