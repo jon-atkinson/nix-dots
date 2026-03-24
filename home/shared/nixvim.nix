@@ -290,7 +290,19 @@ in
     };
 
     plugins = {
-      roslyn.enable = true;
+      roslyn = {
+        enable = true;
+        package = pkgs.roslyn-ls.overrideAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.makeWrapper ];
+          postInstall = (old.postInstall or "") + ''
+            wrapProgram $out/bin/Microsoft.CodeAnalysis.LanguageServer \
+              --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [
+                pkgs.openssl
+                pkgs.zlib
+              ]}
+          '';
+        });
+      };    
       gitgutter.enable = true;
       trouble = {
         enable = true;
