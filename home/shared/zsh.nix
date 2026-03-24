@@ -41,7 +41,9 @@
         source $HOME/dwt/dwt-completion.bash
 
         # KDB env
+        local _PS1="$PS1"
         emulate bash -c "source $NECTAR_DIR/var/common/etc/bashrc"
+        PS1="$_PS1"
         emulate bash -c "source $NECTAR_DIR/var/common/kdb/env.sh"
 
         # Conda environments
