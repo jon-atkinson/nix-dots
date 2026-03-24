@@ -18,6 +18,19 @@ let
       sha256 = "sha256-Lzeag+BKDMAm4AYTUkj3hmGyKeSPhO3ZFlB+4cfjwIE";
     };
   };
+  # roslynWrapped = pkgs.runCommand "roslyn-ls-wrapped"
+  #   {
+  #     nativeBuildInputs = [ pkgs.makeWrapper ];
+  #   }
+  #   ''
+  #     mkdir -p $out/bin
+  #     makeWrapper ${pkgs.roslyn-ls}/bin/roslyn-ls $out/bin/roslyn-ls \
+  #       --set LD_LIBRARY_PATH "${pkgs.lib.makeLibraryPath (with pkgs; [
+  #         openssl
+  #         zlib
+  #         stdenv.cc.cc.lib
+  #       ])}"
+  #   '';
 in
 {
   imports = [ inputs.nixvim.homeModules.nixvim ];
@@ -387,7 +400,10 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
-      roslyn_ls.enable = true;
+      roslyn_ls = {
+        enable = true;
+        # package = roslynWrapped;
+      };
       gopls = {
         enable = true;
         config = {
