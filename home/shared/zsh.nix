@@ -41,13 +41,13 @@
         source $HOME/dwt/dwt-completion.bash
 
         # KDB env
-        emulate bash -c 'source $NECTAR_DIR/var/common/etc/bashrc'
-        emulate bash -c 'source $NECTAR_DIR/var/common/kdb/env.sh'
+        emulate bash -c "source $NECTAR_DIR/var/common/etc/bashrc"
+        emulate bash -c "source $NECTAR_DIR/var/common/kdb/env.sh"
 
         # Conda environments
-        alias env-olympus='source $HOME/miniconda/bin/activate olympus'
-        alias env-pt='source $HOME/miniconda/bin/activate pt'
-        alias envbase='source ~/miniconda/bin/activate'
+        alias env-olympus="source $HOME/miniconda/bin/activate olympus"
+        alias env-pt="source $HOME/miniconda/bin/activate pt"
+        alias envbase="source ~/miniconda/bin/activate"
       
         # Mosek settings
         MOSEKPLATFORM=linux64x86
