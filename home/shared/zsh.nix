@@ -42,10 +42,13 @@
 
         # KDB env
         local _PS1="$PS1"
-        () {
-          emulate -L bash ". $NECTAR_DIR/var/common/etc/bashrc"
+        _source_bashrc() {
+          emulate -L bash
+          . $NECTAR_DIR/var/common/etc/bashrc
         }
+        _source_bashrc
         PS1="$_PS1"
+        unset -f _source_bashrc
         emulate bash -c "source $NECTAR_DIR/var/common/kdb/env.sh"
 
         # Conda environments
