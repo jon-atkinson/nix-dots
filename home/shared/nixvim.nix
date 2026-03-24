@@ -289,7 +289,6 @@ in
     };
 
     plugins = {
-      roslyn = {
       gitgutter.enable = true;
       trouble = {
         enable = true;
