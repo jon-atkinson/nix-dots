@@ -72,7 +72,6 @@
       source $HOME/zabbix_creds.sh
       source $HOME/kdb_creds
       export PATH=$HOME/.dotnet:$PATH
-      # export DOTNET_ROOT=$HOME/.dotnet
       export VIVSPACK_ROOT=$\{HOME}/vivspack
       export NECTAR_DIR=$HOME/repo/nectar
       export KDB_DIR=~/olympus/data/kdb
