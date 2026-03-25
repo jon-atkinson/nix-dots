@@ -19,7 +19,10 @@ let
       tar xzf $src -C $out
     '';
     dontBuild = true;
-    dontInstall = true;
+    installPhase = ''
+      mkdir -p $out/bin
+      ln -s $out/dotnet $out/bin/dotnet
+    '';
   };
 
   dotnet = if mode == "work" then msSdk else baseSdk;
