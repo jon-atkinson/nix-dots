@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./dotnet.nix ];
+
   home.packages = with pkgs; [
     zip
     xz
@@ -30,12 +32,10 @@
 
     # language toolchains
     rustup
-    dotnetCorePackages.dotnet_9.sdk
 
     # work containerisation
     podman
   ];
-  home.sessionVariables.DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_9.sdk}";
 
   programs.home-manager.enable = true;
   programs.uv.enable = true;
