@@ -98,7 +98,7 @@
         linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/";
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jonathan/";
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/";
       };
     };
 }
