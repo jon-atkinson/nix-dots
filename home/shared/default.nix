@@ -32,6 +32,7 @@
 
     # language toolchains
     rustup
+    maven
 
     # work containerisation
     podman
