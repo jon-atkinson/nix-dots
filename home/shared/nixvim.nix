@@ -413,8 +413,10 @@ in
       };
       java_language_server = {
         enable = true;
-        cmd = [ "${pkgs.java-language-server}/bin/java-language-server" ];
-        extraOptions.single_file_support = true;
+        extraOptions = {
+          cmd = [ "${pkgs.java-language-server}/bin/java-language-server" ];
+          single_file_support = true;
+        };
       };
       gopls = {
         enable = true;
