@@ -18,20 +18,26 @@ let
       sha256 = "sha256-Lzeag+BKDMAm4AYTUkj3hmGyKeSPhO3ZFlB+4cfjwIE";
     };
   };
-  roslynWrapped = pkgs.runCommand "roslyn-ls-wrapped"
-    {
-      nativeBuildInputs = [ pkgs.makeWrapper ];
-    }
-    ''
-      mkdir -p $out/bin
-      makeWrapper ${pkgs.roslyn-ls}/bin/Microsoft.CodeAnalysis.LanguageServer $out/bin/Microsoft.CodeAnalysis.LanguageServer \
-        --set LD_LIBRARY_PATH "${pkgs.lib.makeLibraryPath (with pkgs; [
-          openssl
-          icu
-          zlib
-          stdenv.cc.cc.lib
-        ])}"
-    '';
+  roslynWrapped =
+    pkgs.runCommand "roslyn-ls-wrapped"
+      {
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+      }
+      ''
+        mkdir -p $out/bin
+        makeWrapper ${pkgs.roslyn-ls}/bin/Microsoft.CodeAnalysis.LanguageServer $out/bin/Microsoft.CodeAnalysis.LanguageServer \
+          --set LD_LIBRARY_PATH "${
+            pkgs.lib.makeLibraryPath (
+              with pkgs;
+              [
+                openssl
+                icu
+                zlib
+                stdenv.cc.cc.lib
+              ]
+            )
+          }"
+      '';
 in
 {
   imports = [ inputs.nixvim.homeModules.nixvim ];
@@ -405,6 +411,7 @@ in
         enable = true;
         package = roslynWrapped;
       };
+      java_language_server.enable = true;
       gopls = {
         enable = true;
         config = {
