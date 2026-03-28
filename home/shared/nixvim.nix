@@ -407,16 +407,16 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
-      roslyn_ls = {
-        enable = true;
-        package = roslynWrapped;
-      };
       java_language_server = {
         enable = true;
-        extraOptions = {
+        config = {
           cmd = [ "${pkgs.java-language-server}/bin/java-language-server" ];
           single_file_support = true;
         };
+      };
+      roslyn_ls = {
+        enable = true;
+        package = roslynWrapped;
       };
       gopls = {
         enable = true;
