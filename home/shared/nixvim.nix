@@ -18,17 +18,6 @@ let
       sha256 = "sha256-Lzeag+BKDMAm4AYTUkj3hmGyKeSPhO3ZFlB+4cfjwIE";
     };
   };
-  javaLsWrapped =
-    pkgs.runCommand "java-language-server-wrapped"
-      {
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-      }
-      ''
-        mkdir -p $out/bin
-        makeWrapper ${pkgs.java-language-server}/bin/java-language-server $out/bin/java-language-server \
-          --set JAVA_HOME "${pkgs.java-language-server}/share/java/java-language-server/mac" \
-          --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.maven ]}
-      '';
   roslynWrapped =
     pkgs.runCommand "roslyn-ls-wrapped"
       {
@@ -418,13 +407,7 @@ in
 
     lsp.servers = {
       copilot.enable = lib.mkIf (mode == "personal") true;
-      java_language_server = {
-        enable = true;
-        config = {
-          cmd = [ "${javaLsWrapped}/bin/java-language-server" ];
-          single_file_support = true;
-        };
-      };
+      jdtls.enable = true;
       roslyn_ls = {
         enable = true;
         package = roslynWrapped;
