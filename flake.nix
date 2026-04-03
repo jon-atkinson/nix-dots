@@ -10,10 +10,7 @@
     nixvim.url = "github:nix-community/nixvim";
     nix-colors.url = "github:Misterio77/nix-colors";
     nvim-config.url = "github:jon-atkinson/nvimConfigs";
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
