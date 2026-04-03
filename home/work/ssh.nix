@@ -13,10 +13,10 @@
     mode = "0600";
   };
 
-  # TODO: replace with actual content from work machine
-  home.file.".ssh/officepc.pub".text = "REPLACEME";
+  home.file.".ssh/officepc.pub".text =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILMAt8S9WUOBTQQ6sMPEbdBzgKyjErO/IIGxCLgurBJH jonathan.atkinson@vivcourt.com";
   home.file.".ssh/authorized_keys" = {
-    text = "REPLACEME";
+    text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKv811OSTjmJXhAEXRI7irLNysvPNAa0XCKwD9mi73WN 95665780+jon-atkinson@users.noreply.github.com";
     onChange = "chmod 600 ~/.ssh/authorized_keys";
   };
 }
