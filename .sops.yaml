@@ -1,0 +1,13 @@
+keys:
+  - &personal age1v9amhqauawz9m40mu5gpm0kxyk5mkq7l0xmhqkvmxhjc5nq2zdyqggn2gc
+  - &work age17s9wrecu77cmfpuk2g4g6js52rhg33ytwp986nhlvfp6zmr09fns8myj02
+
+creation_rules:
+  - path_regex: secrets/personal/.*
+    key_groups:
+      - age:
+          - *personal
+  - path_regex: secrets/work/.*
+    key_groups:
+      - age:
+          - *work

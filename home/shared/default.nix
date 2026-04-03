@@ -4,6 +4,8 @@
   imports = [ ./dotnet.nix ];
 
   home.packages = with pkgs; [
+    age
+    sops
     zip
     xz
     unzip

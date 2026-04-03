@@ -10,6 +10,10 @@
     nixvim.url = "github:nix-community/nixvim";
     nix-colors.url = "github:Misterio77/nix-colors";
     nvim-config.url = "github:jon-atkinson/nvimConfigs";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,17 +23,19 @@
       nixvim,
       nix-colors,
       nvim-config,
+      sops-nix,
       ...
     }@inputs:
     let
       mkHomeConfig =
-        mode: system: username: userhomedir:
+        mode: system: username: userhomedir: extraModules:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
           modules = [
+            sops-nix.homeManagerModules.sops
             {
               home.username = username;
               home.homeDirectory = userhomedir;
@@ -41,7 +47,7 @@
                 ./home/shared/zsh.nix
                 ./home/shared/codex.nix
                 inputs.nix-colors.homeManagerModules.default
-              ];
+              ] ++ extraModules;
             }
           ];
           extraSpecialArgs = { inherit inputs mode; };
@@ -92,13 +98,13 @@
       };
 
       homeConfigurations = {
-        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/";
-        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/";
+        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/personal/ssh.nix ];
+        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ];
 
-        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/";
+        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/";
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ];
       };
     };
 }
