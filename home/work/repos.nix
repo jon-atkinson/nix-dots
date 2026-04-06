@@ -1,9 +1,10 @@
 { config, lib, pkgs, ... }:
 
 let
-  homeDir = config.home.homeDirectory;
+  homeDir = lib.removeSuffix "/" config.home.homeDirectory;
   repoDir = "${homeDir}/repo";
   sshKey = "${homeDir}/.ssh/officepc";
+  ssh = "${pkgs.openssh}/bin/ssh";
 
   repos = [
     "nectar"
@@ -16,7 +17,7 @@ let
   cloneScript = lib.concatMapStringsSep "\n" (name: ''
     if [ ! -d "${repoDir}/${name}" ]; then
       echo "Cloning ${name}..."
-      GIT_SSH_COMMAND="ssh -i ${sshKey} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+      GIT_SSH_COMMAND="${ssh} -i ${sshKey} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
         ${lib.getExe pkgs.git} clone "git@bitbucket.org:vivcourt/${name}.git" "${repoDir}/${name}"
     fi
   '') repos;
