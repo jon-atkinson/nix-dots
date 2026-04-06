@@ -101,7 +101,7 @@
         linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
       };
     };
 }
