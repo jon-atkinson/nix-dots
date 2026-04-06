@@ -10,6 +10,7 @@
     nixvim.url = "github:nix-community/nixvim";
     nix-colors.url = "github:Misterio77/nix-colors";
     nvim-config.url = "github:jon-atkinson/nvimConfigs";
+    sops-nix.url = "github:Mic92/sops-nix/17eea6f3816ba6568b8c81db8a4e6ca438b30b7c";
   };
 
   outputs =
@@ -19,17 +20,19 @@
       nixvim,
       nix-colors,
       nvim-config,
+      sops-nix,
       ...
     }@inputs:
     let
       mkHomeConfig =
-        mode: system: username: userhomedir:
+        mode: system: username: userhomedir: extraModules:
         home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
           };
           modules = [
+            sops-nix.homeManagerModules.sops
             {
               home.username = username;
               home.homeDirectory = userhomedir;
@@ -41,7 +44,7 @@
                 ./home/shared/zsh.nix
                 ./home/shared/codex.nix
                 inputs.nix-colors.homeManagerModules.default
-              ];
+              ] ++ extraModules;
             }
           ];
           extraSpecialArgs = { inherit inputs mode; };
@@ -88,17 +91,17 @@
           mkNixosSystem "personal" "x86_64-linux"
             [ ./hosts/nixos-laptop.nix ]
             [ ./home/nixos/hyprland.nix ];
-        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ];
+        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ];
       };
 
       homeConfigurations = {
-        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/";
-        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/";
+        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/personal/ssh.nix ];
+        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
 
-        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/";
+        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/";
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
       };
     };
 }

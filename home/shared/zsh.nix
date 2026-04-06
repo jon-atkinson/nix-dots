@@ -38,7 +38,7 @@
       ''    
       (lib.mkIf (mode == "work") ''
         # dwt setup
-        source $HOME/dwt/dwt-completion.bash
+        source $HOME/repo/dwt/dwt-completion.bash
 
         # KDB env
         local _PS1="$PS1"
@@ -72,7 +72,7 @@
       source $HOME/zabbix_creds.sh
       source $HOME/kdb_creds
       export PATH=$HOME/.dotnet:$PATH
-      export VIVSPACK_ROOT=$\{HOME}/vivspack
+      export VIVSPACK_ROOT=$HOME/repo/vivspack
       export NECTAR_DIR=$HOME/repo/nectar
       export KDB_DIR=~/olympus/data/kdb
       export RESEARCH_DIR=~/olympus/data/research
