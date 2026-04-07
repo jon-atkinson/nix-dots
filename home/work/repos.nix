@@ -28,9 +28,6 @@ in
     # Ensure this script has access to git
     export PATH="${lib.makeBinPath [ pkgs.git pkgs.openssh ]}:$PATH"
 
-    # Ensure ~/repo exists 
-    run mkdir -p "${repoDir}"
-
     # Ensure repo directory exists
     run mkdir -p "${repoDir}"
 
@@ -75,6 +72,16 @@ in
   '';
 
   home.packages = [ pkgs.remmina ];
+  home.file.".local/share/applications/remmina.desktop".text = ''
+    [Desktop Entry]
+    Name=Remmina
+    Comment=Remote Desktop Client
+    Exec=${pkgs.remmina}/bin/activate
+    Icon=${pkgs.remmina}/share/icons/hicolor/scalable/apps/org.remmina.Remmina.svg
+    Terminal=false
+    Type=Application
+    Categories=Network;RemoteAccess
+  '';
   sops.secrets."remmina_pc331" = {
       path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
       mode = "0600";
@@ -112,7 +119,7 @@ in
       # 3. dwt - pip install
       if [ -d "$REPO_DIR/dwt" ]; then
         echo "[3/6] Installing dwt (pip install -e)..."
-        "$HOME_DIR/miniconda/envs/olympus/bin/pip" install -e "$REPO_DIR/dwt"
+        "$HOME_DIR/miniconda/bin/pip" install -e "$REPO_DIR/dwt"
       else
         echo "[3/6] dwt repo not found, skipping."
       fi
