@@ -119,7 +119,7 @@ in
       # 3. dwt - pip install
       if [ -d "$REPO_DIR/dwt" ]; then
         echo "[3/6] Installing dwt (pip install -e)..."
-        "$HOME_DIR/miniconda/bin/pip" install -e "$REPO_DIR/dwt"
+        "$HOME_DIR/miniconda/envs/olympus/bin/pip" install -e "$REPO_DIR/dwt"
       else
         echo "[3/6] dwt repo not found, skipping."
       fi
