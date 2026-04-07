@@ -108,14 +108,21 @@ in
       _missing=""
       command -v newuidmap >/dev/null 2>&1 || _missing="$_missing uidmap"
       if [ -n "$_missing" ]; then
-        echo "[0] Missing system packages:$_missing"
-        echo "    Install with: sudo apt install$_missing"
-        read -p "    Install now? [y/N] " _reply
+        echo "[0a] Missing system packages:$_missing"
+        echo "     Install with: sudo apt install$_missing"
+        read -p "     Install now? [y/N] " _reply
         if [[ "$_reply" =~ ^[Yy]$ ]]; then
           sudo apt-get install -y $_missing
         else
-          echo "    Skipping. Some steps (e.g. dwt build) may fail without these."
+          echo "     Skipping. Some steps (e.g. dwt build) may fail without these."
         fi
+      fi
+
+      # 0b. Ensure rootless podman has subuid/subgid ranges
+      if ! grep -q "^$USER:" /etc/subuid 2>/dev/null; then
+        echo "[0b] Configuring subordinate UID/GID ranges for rootless podman..."
+        sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"
+        podman system migrate
       fi
 
       # 1. Nectar - install miniconda
