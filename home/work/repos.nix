@@ -25,6 +25,12 @@ let
 in
 {
   home.activation.cloneWorkRepos = lib.hm.dag.entryAfter [ "writeBoundary" "sops-nix" ] ''
+    # Ensure this script has access to git
+    export PATH="${lib.makeBinPath [ pkgs.git pkgs.openssh ]}:$PATH"
+
+    # Ensure ~/repo exists 
+    run mkdir -p "${repoDir}"
+
     # Ensure repo directory exists
     run mkdir -p "${repoDir}"
 
