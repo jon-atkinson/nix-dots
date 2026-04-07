@@ -69,7 +69,6 @@ in
   '';
 
   sops.secrets."dwt_config" = {
-    sopsFile = ../../secrets/work/dwt.yaml;
     path = "${homeDir}/.dwt/dwt.yaml";
     mode = "0600";
   };

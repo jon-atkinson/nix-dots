@@ -1,7 +1,7 @@
 { config, ... }:
 
 {
-  sops.defaultSopsFile = ../../secrets/work/ssh.yaml;
+  sops.defaultSopsFile = ../../secrets/work/misc.yaml;
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
   sops.secrets."officepc" = {
