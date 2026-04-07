@@ -68,6 +68,7 @@
         export QINIT=$NECTAR_DIR/var/common/kdb/q.q
 
         source $HOME/miniconda/bin/activate olympus
+        alias clear=/usr/bin/clear
       '')
     ];
     envExtra = lib.mkIf (mode == "work") ''
