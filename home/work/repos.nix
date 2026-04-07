@@ -74,6 +74,12 @@ in
     fi
   '';
 
+  home.packages = [ pkgs.remmina ];
+  sops.secrets."remmina_pc331" = {
+      path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
+      mode = "0600";
+  };
+
   sops.secrets."dwt_config" = {
     path = "${homeDir}/.dwt/dwt.yaml";
     mode = "0600";
