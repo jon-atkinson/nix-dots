@@ -72,6 +72,10 @@ in
   '';
 
   home.packages = [ pkgs.remmina ];
+
+  home.file.".config/containers/registries.conf".text = ''
+    unqualified-search-registries = ["docker.io"]
+  '';
   home.file.".local/share/applications/remmina.desktop".text = ''
     [Desktop Entry]
     Name=Remmina
