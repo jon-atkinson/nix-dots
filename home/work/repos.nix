@@ -75,6 +75,16 @@ in
   '';
 
   home.packages = [ pkgs.remmina ];
+  home.file.".local/share/applications/remmina.desktop".text = ''
+    [Desktop Entry]
+    Name=Remmina
+    Comment=Remote Desktop Client
+    Exec=${pkgs.remmina}/bin/activate
+    Icon=${pkgs.remmina}/share/icons/hicolor/scalable/apps/org.remmina.Remmina.svg
+    Terminal=false
+    Type=Application
+    Categories=Network;RemoteAccess;
+  '';
   sops.secrets."remmina_pc331" = {
       path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
       mode = "0600";
