@@ -120,7 +120,16 @@ in
       echo "=== Work Environment Setup ==="
       echo ""
 
-      # 0. Check system dependencies (require sudo to install)
+      # 0. Initial Setup
+      # Ensure /data exists with correct ownership
+      if [ ! -d /data ]; then
+        echo "[0] Creating /data directory..."
+        sudo mkdir -p /data
+        sudo chown "$USER:$(id -gn)" /data
+      fi
+      mkdir -p /data/worktrees /data/kdb
+
+      # Check system dependencies (require sudo to install)
       _missing=""
       command -v newuidmap >/dev/null 2>&1 || _missing="$_missing uidmap"
       if [ -n "$_missing" ]; then
@@ -134,7 +143,7 @@ in
         fi
       fi
 
-      # 0b. Ensure rootless podman has subuid/subgid ranges
+      # Ensure rootless podman has subuid/subgid ranges
       if ! grep -q "^$USER:" /etc/subuid 2>/dev/null; then
         echo "[0b] Configuring subordinate UID/GID ranges for rootless podman..."
         sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"
