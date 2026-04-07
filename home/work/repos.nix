@@ -76,6 +76,10 @@ in
   home.file.".config/containers/registries.conf".text = ''
     unqualified-search-registries = ["docker.io"]
   '';
+
+  home.file.".config/containers/policy.json".text = builtins.toJSON {
+    default = [{ type = "insecureAcceptAnything"; }];
+  };
   home.file.".local/share/applications/remmina.desktop".text = ''
     [Desktop Entry]
     Name=Remmina
