@@ -78,7 +78,10 @@ in
   '';
 
   home.file.".config/containers/policy.json".text = builtins.toJSON {
-    default = [{ type = "insecureAcceptAnything"; }];
+    default = [{ type = "reject"; }];
+    transports.docker = {
+      "docker.io" = [{ type = "insecureAcceptAnything"; }];
+    };
   };
   home.file.".local/share/applications/remmina.desktop".text = ''
     [Desktop Entry]
