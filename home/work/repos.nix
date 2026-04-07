@@ -104,6 +104,20 @@ in
       echo "=== Work Environment Setup ==="
       echo ""
 
+      # 0. Check system dependencies (require sudo to install)
+      _missing=""
+      command -v newuidmap >/dev/null 2>&1 || _missing="$_missing uidmap"
+      if [ -n "$_missing" ]; then
+        echo "[0] Missing system packages:$_missing"
+        echo "    Install with: sudo apt install$_missing"
+        read -p "    Install now? [y/N] " _reply
+        if [[ "$_reply" =~ ^[Yy]$ ]]; then
+          sudo apt-get install -y $_missing
+        else
+          echo "    Skipping. Some steps (e.g. dwt build) may fail without these."
+        fi
+      fi
+
       # 1. Nectar - install miniconda
       if [ ! -d "$HOME_DIR/miniconda" ]; then
         echo "[1/6] Installing miniconda..."
