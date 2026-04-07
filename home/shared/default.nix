@@ -40,6 +40,7 @@
     podman
   ];
 
+  targets.genericLinux.enable = pkgs.stdenv.isLinux;
   programs.home-manager.enable = true;
   programs.uv.enable = true;
 }
