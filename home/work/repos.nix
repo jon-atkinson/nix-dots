@@ -79,8 +79,13 @@ in
 
   home.file.".config/containers/policy.json".text = builtins.toJSON {
     default = [{ type = "reject"; }];
-    transports.docker = {
-      "docker.io" = [{ type = "insecureAcceptAnything"; }];
+    transports = {
+        containers-storage = {
+            "" = [ { type = "insecureAcceptAnything"; } ];
+        };
+        docker = {
+          "docker.io" = [{ type = "insecureAcceptAnything"; }];
+        };
     };
   };
   home.file.".local/share/applications/remmina.desktop".text = ''
