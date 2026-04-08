@@ -10,15 +10,14 @@
     sopsFile = ../../secrets/work/misc.yaml;
   };
 
-  sops.templates."git-user-config" = {
+  sops.templates."git-config" = {
     content = ''
       [user]
       	name = ${config.sops.placeholder."git_name"}
       	email = ${config.sops.placeholder."git_email"}
+      [core]
+      	editor = nvim
     '';
+    path = "${config.home.homeDirectory}/.config/git/config";
   };
-
-  programs.git.includes = [
-    { path = config.sops.templates."git-user-config".path; }
-  ];
 }

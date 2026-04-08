@@ -1,12 +1,5 @@
-{
-  ...
-}:
+{ pkgs, ... }:
 
 {
-  programs.git = {
-    enable = true;
-    extraConfig.core = {
-      editor = "nvim";
-    };
-  };
+  home.packages = [ pkgs.git ];
 }
