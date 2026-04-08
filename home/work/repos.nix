@@ -83,7 +83,11 @@ in
     fi
   '';
 
-  home.packages = [ pkgs.remmina pkgs.slirp4netns ];
+  home.packages = [
+    pkgs.remmina
+    pkgs.slirp4netns
+    pkgs.zoom-us
+  ];
 
   home.file.".config/containers/registries.conf".text = ''
     unqualified-search-registries = ["docker.io"]
