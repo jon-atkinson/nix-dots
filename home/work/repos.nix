@@ -104,7 +104,7 @@ in
     [Desktop Entry]
     Name=Remmina
     Comment=Remote Desktop Client
-    Exec=${pkgs.remmina}/bin/activate
+    Exec=${pkgs.remmina}/bin/remmina
     Icon=${pkgs.remmina}/share/icons/hicolor/scalable/apps/org.remmina.Remmina.svg
     Terminal=false
     Type=Application
