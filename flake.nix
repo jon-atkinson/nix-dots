@@ -43,6 +43,7 @@
                 ./home/shared/zellij.nix
                 ./home/shared/zsh.nix
                 ./home/shared/codex.nix
+                ./home/shared/git.nix
                 inputs.nix-colors.homeManagerModules.default
               ] ++ extraModules;
             }
@@ -74,6 +75,7 @@
                     ./home/shared/zellij.nix
                     ./home/shared/zsh.nix
                     ./home/shared/codex.nix
+                    ./home/shared/git.nix
                     ./home/nixos/fonts.nix
                     inputs.nix-colors.homeManagerModules.default
                   ]
@@ -90,18 +92,18 @@
         nixos-wm =
           mkNixosSystem "personal" "x86_64-linux"
             [ ./hosts/nixos-laptop.nix ]
-            [ ./home/nixos/hyprland.nix ];
-        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ];
+            [ ./home/nixos/hyprland.nix ./home/personal/git.nix ];
+        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
       };
 
       homeConfigurations = {
-        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/personal/ssh.nix ];
-        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
+        darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/personal/ssh.nix ./home/personal/git.nix ];
+        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
 
-        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ];
+        linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ./home/personal/git.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ];
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
       };
     };
 }
