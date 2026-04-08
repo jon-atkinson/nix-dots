@@ -114,6 +114,17 @@ in
     Type=Application
     Categories=Network;RemoteAccess
   '';
+  home.file.".local/share/applications/zoom.desktop".text = ''
+    [Desktop Entry]
+    Name=Zoom
+    Comment=Video Conferencing
+    Exec=${pkgs.zoom-us}/bin/zoom
+    Icon=${pkgs.zoom-us}/share/pixmaps/Zoom.png
+    Terminal=false
+    Type=Application
+    Categories=Network;VideoConference
+  '';
+
   sops.secrets."remmina_pc331" = {
       path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
       mode = "0600";
