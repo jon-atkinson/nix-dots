@@ -144,6 +144,7 @@ in
       # Check system dependencies (require sudo to install)
       _missing=""
       command -v newuidmap >/dev/null 2>&1 || _missing="$_missing uidmap"
+      [ -f /lib/ld-linux.so.2 ] || _missing="$_missing libc6-i386"
       if [ -n "$_missing" ]; then
         echo "[0a] Missing system packages:$_missing"
         echo "     Install with: sudo apt install$_missing"
