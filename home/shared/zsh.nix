@@ -67,7 +67,6 @@
         export DISABLE_TASKSET_FOR_Q=1
         export QINIT=$NECTAR_DIR/var/common/kdb/q.q
 
-        source $HOME/miniconda/bin/activate olympus
         alias clear=/usr/bin/clear
       '')
     ];
