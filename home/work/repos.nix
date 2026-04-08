@@ -45,6 +45,18 @@ in
     else
       ${cloneScript}
 
+      # Fetch q32 if not present
+      if [ ! -d "${homeDir}/q32" ]; then
+        echo "Fetching q32..."
+        _q32_tmp=$(mktemp -d)
+        GIT_SSH_COMMAND="${ssh} -i ${sshKey} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+          ${lib.getExe pkgs.git} clone --depth 1 "git@github.com:jon-atkinson/qbin.git" "$_q32_tmp" \
+          && cp -r "$_q32_tmp/q32" "${homeDir}/q32" \
+          && echo "q32 installed to ~/q32" \
+          || echo "WARNING: Failed to fetch q32"
+        rm -rf "$_q32_tmp"
+      fi
+
       # Symlink nectar bin utilities
       if [ -d "${repoDir}/nectar/var/common/bin" ]; then
         run mkdir -p "${homeDir}/bin"
