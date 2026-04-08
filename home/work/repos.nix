@@ -86,7 +86,6 @@ in
   home.packages = [
     pkgs.remmina
     pkgs.slirp4netns
-    pkgs.zoom-us
   ];
 
   home.file.".config/containers/registries.conf".text = ''
@@ -114,17 +113,6 @@ in
     Type=Application
     Categories=Network;RemoteAccess
   '';
-  home.file.".local/share/applications/zoom.desktop".text = ''
-    [Desktop Entry]
-    Name=Zoom
-    Comment=Video Conferencing
-    Exec=${pkgs.zoom-us}/bin/zoom
-    Icon=${pkgs.zoom-us}/share/pixmaps/Zoom.png
-    Terminal=false
-    Type=Application
-    Categories=Network;VideoConference
-  '';
-
   sops.secrets."remmina_pc331" = {
       path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
       mode = "0600";
@@ -178,51 +166,62 @@ in
         podman system migrate
       fi
 
-      # 1. Nectar - install miniconda
+      # 1. Zoom - install via .deb
+      if ! command -v zoom >/dev/null 2>&1; then
+        echo "[1/7] Installing Zoom..."
+        _zoom_tmp=$(mktemp -d)
+        wget -q -O "$_zoom_tmp/zoom.deb" "https://zoom.us/client/latest/zoom_amd64.deb"
+        sudo apt-get install -y "$_zoom_tmp/zoom.deb"
+        rm -rf "$_zoom_tmp"
+      else
+        echo "[1/7] Zoom already installed, skipping."
+      fi
+
+      # 2. Nectar - install miniconda
       if [ ! -d "$HOME_DIR/miniconda" ]; then
-        echo "[1/6] Installing miniconda..."
+        echo "[2/7] Installing miniconda..."
         "$REPO_DIR/nectar/etc/env/conda_install.sh"
       else
-        echo "[1/6] Miniconda already installed, skipping."
+        echo "[2/7] Miniconda already installed, skipping."
       fi
 
-      # 2. Nectar - create/update olympus conda env
-      echo "[2/6] Creating/updating olympus conda environment..."
+      # 3. Nectar - create/update olympus conda env
+      echo "[3/7] Creating/updating olympus conda environment..."
       "$REPO_DIR/nectar/etc/env/update_env.sh"
 
-      # 3. dwt - pip install
+      # 4. dwt - pip install
       if [ -d "$REPO_DIR/dwt" ]; then
-        echo "[3/6] Installing dwt (pip install -e)..."
+        echo "[4/7] Installing dwt (pip install -e)..."
         "$HOME_DIR/miniconda/envs/olympus/bin/pip" install -e "$REPO_DIR/dwt"
       else
-        echo "[3/6] dwt repo not found, skipping."
+        echo "[4/7] dwt repo not found, skipping."
       fi
 
-      # 4. dwt - enable linger (Linux only)
+      # 5. dwt - enable linger (Linux only)
       if [[ "$(uname)" == "Linux" ]]; then
-        echo "[4/6] Enabling loginctl linger..."
+        echo "[5/7] Enabling loginctl linger..."
         loginctl enable-linger "$USER" || echo "WARNING: loginctl enable-linger failed"
       else
-        echo "[4/6] Skipping loginctl linger (not Linux)."
+        echo "[5/7] Skipping loginctl linger (not Linux)."
       fi
 
-      # 5. dwt - build container
+      # 6. dwt - build container
       if [ -d "$REPO_DIR/dwt" ]; then
-        echo "[5/6] Building dwt container image (this may take a while)..."
+        echo "[6/7] Building dwt container image (this may take a while)..."
         export PATH="$HOME_DIR/miniconda/envs/olympus/bin:$PATH"
         dwt build || echo "WARNING: dwt build failed. You can retry with 'dwt build'."
       else
-        echo "[5/6] dwt repo not found, skipping."
+        echo "[6/7] dwt repo not found, skipping."
       fi
 
-      # 6. vivspack - CA cert + install
+      # 7. vivspack - CA cert + install
       if [ -d "$REPO_DIR/vivspack" ]; then
-        echo "[6/6] Installing vivspack (requires sudo)..."
+        echo "[7/7] Installing vivspack (requires sudo)..."
         cd "$REPO_DIR/vivspack"
         sudo ./add-vivcourt-ca
         ./install
       else
-        echo "[6/6] vivspack repo not found, skipping."
+        echo "[7/7] vivspack repo not found, skipping."
       fi
 
       echo ""
