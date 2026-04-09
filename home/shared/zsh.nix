@@ -71,8 +71,8 @@
       '')
     ];
     envExtra = lib.mkIf (mode == "work") ''
-      source $HOME/zabbix_creds.sh
-      source $HOME/kdb_creds
+      source $HOME/zbx
+      source $HOME/kdb
       export PATH=$HOME/.dotnet:$PATH
       export VIVSPACK_ROOT=$HOME/repo/vivspack
       export NECTAR_DIR=$HOME/repo/nectar

@@ -123,6 +123,15 @@ in
     mode = "0600";
   };
 
+  sops.secrets."zbx" = {
+    path = "${homeDir}/zbx";
+    mode = "0600";
+  };
+  sops.secrets."kdb" = {
+    path = "${homeDir}/kdb";
+    mode = "0600";
+  };
+
   home.file."bin/work-setup.sh" = {
     executable = true;
     text = ''
