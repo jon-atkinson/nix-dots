@@ -81,6 +81,9 @@
             return 1
           fi
 
+          # Ensure the olympus conda env is active so dwt is on PATH
+          source $HOME/miniconda/bin/activate olympus
+
           DWT_NAME="$name" envsubst '$DWT_NAME' < "$layout_template" > "$layout"
 
           local dwt_status=""
@@ -148,7 +151,6 @@
           # 2. Select "1. Claude account with subscription"
           sleep 5
           zellij action write-chars "5"
-          sleep 1
           zellij action write-chars "1"
 
           # Focus stays on the bottom-right claude pane
