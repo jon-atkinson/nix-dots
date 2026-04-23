@@ -146,12 +146,31 @@
           zellij action write-chars "claude --name $name --permission-mode auto --model opus"
           zellij action write 13
 
-          # Automate claude onboarding if this is a fresh container:
-          # 1. Select "5. Dark Mode (ANSI colors only)"
-          # 2. Select "1. Claude account with subscription"
-          sleep 5
-          zellij action write-chars "5"
-          zellij action write-chars "1"
+          # Automate claude onboarding by polling the pane screen for expected
+          # prompts. Skips cleanly if these screens don't appear (e.g. claude
+          # is already authed).
+          local screen
+          screen=$(mktemp)
+          _feature_wait_for() {
+            local pattern="$1"
+            local i=0
+            while (( i < 15 )); do
+              zellij action dump-screen "$screen" 2>/dev/null
+              if grep -q "$pattern" "$screen"; then return 0; fi
+              sleep 0.2
+              ((i++))
+            done
+            return 1
+          }
+
+          if _feature_wait_for "Dark Mode"; then
+            zellij action write-chars "5"
+            if _feature_wait_for "subscription"; then
+              zellij action write-chars "1"
+            fi
+          fi
+          rm -f "$screen"
+          unset -f _feature_wait_for
 
           # Focus stays on the bottom-right claude pane
 
