@@ -130,6 +130,17 @@
           zellij action write-chars "claude --name $name --permission-mode auto --model opus"
           zellij action write 13
 
+          # Automate claude onboarding if this is a fresh container:
+          # 1. Select "5. Dark Mode (ANSI colors only)"
+          # 2. Select "1. Claude account with subscription"
+          # 3. Press "c" to copy the auth code to clipboard
+          sleep 5
+          zellij action write-chars "5"
+          sleep 2
+          zellij action write-chars "1"
+          sleep 3
+          zellij action write-chars "c"
+
           # Focus stays on the bottom-right claude pane
 
           rm -f "$layout"
