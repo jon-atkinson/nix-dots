@@ -16,8 +16,8 @@
       }
       tab name="$DWT_NAME" focus=true {
         pane split_direction="vertical" {
-          pane size="50%" cwd="/home/jon/worktrees/$DWT_NAME" command="nvim" {
-            args "."
+          pane size="50%" cwd="/home/jon/worktrees/$DWT_NAME" command="zsh" {
+            args "-i" "-c" "nv; exec zsh -i"
             focus true
           }
           pane size="50%" split_direction="horizontal" {

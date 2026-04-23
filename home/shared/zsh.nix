@@ -153,13 +153,20 @@
           screen=$(mktemp)
           _feature_wait_for() {
             local pattern="$1"
+            local max_iter="''${2:-60}"
             local i=0
-            while (( i < 15 )); do
+            while (( i < max_iter )); do
               zellij action dump-screen "$screen" 2>/dev/null
-              if grep -q "$pattern" "$screen"; then return 0; fi
+              if grep -qi "$pattern" "$screen"; then
+                echo "[feature] matched '$pattern' after $((i * 200))ms" >&2
+                return 0
+              fi
               sleep 0.2
               ((i++))
             done
+            echo "[feature] timed out waiting for '$pattern' after $((max_iter * 200))ms" >&2
+            echo "[feature] last screen dump:" >&2
+            cat "$screen" >&2
             return 1
           }
 
@@ -167,6 +174,54 @@
             zellij action write-chars "5"
             if _feature_wait_for "subscription"; then
               zellij action write-chars "1"
+              # Wait for the auth URL to appear, then extract and open on host.
+              # The URL wraps across multiple terminal lines, so reconstruct it
+              # by concatenating continuation lines. Pick the longest URL on
+              # screen since claude shows a short display URL + the full URL.
+              if _feature_wait_for "https://"; then
+                zellij action write-chars "c"
+                sleep 0.3
+                zellij action dump-screen "$screen" 2>/dev/null
+                local auth_url
+                auth_url=$(awk '
+                  function save_if_longer() {
+                    if (length(cur) > length(longest)) longest = cur
+                    cur = ""; in_url = 0
+                  }
+                  BEGIN { in_url = 0; longest = ""; cur = "" }
+                  {
+                    if (in_url) {
+                      if ($0 ~ /^[^[:space:]]+$/) { cur = cur $0; next }
+                      save_if_longer()
+                    }
+                    if ($0 ~ /https:\/\//) {
+                      match($0, /https:\/\/[^[:space:]]*/)
+                      cur = substr($0, RSTART)
+                      in_url = 1
+                    }
+                  }
+                  END { save_if_longer(); print longest }
+                ' "$screen")
+                if [[ -n "$auth_url" ]]; then
+                  xdg-open "$auth_url" >/dev/null 2>&1 &!
+                  echo "[feature] opened auth URL in browser: $auth_url" >&2
+                else
+                  echo "[feature] failed to extract auth URL from screen" >&2
+                fi
+                # Wait up to 5 minutes for the user to complete browser auth
+                if _feature_wait_for "Login successful" 1500; then
+                  zellij action write 13
+                  if _feature_wait_for "Security notes"; then
+                    zellij action write 13
+                    if _feature_wait_for "trust this folder"; then
+                      zellij action write 13
+                      if _feature_wait_for "Enable auto mode"; then
+                        zellij action write 13
+                      fi
+                    fi
+                  fi
+                fi
+              fi
             fi
           fi
           rm -f "$screen"
