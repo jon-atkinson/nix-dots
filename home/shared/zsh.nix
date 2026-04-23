@@ -68,6 +68,72 @@
         export QINIT=$NECTAR_DIR/var/common/kdb/q.q
 
         alias clear=/usr/bin/clear
+
+        # feature: create a dwt container and open a zellij workspace
+        feature() {
+          local name="''${1:?Usage: feature <name>}"
+          local layout_template="$HOME/.config/zellij/layouts/feature.kdl"
+          local layout
+          layout=$(mktemp /tmp/feature-layout-XXXXX.kdl)
+
+          if [[ ! -f "$layout_template" ]]; then
+            echo "error: layout template not found at $layout_template"
+            return 1
+          fi
+
+          DWT_NAME="$name" envsubst '$DWT_NAME' < "$layout_template" > "$layout"
+
+          if podman ps --format '{{.Names}}' 2>/dev/null | grep -q "$name"; then
+            echo "Container '$name' is already running, skipping creation."
+          elif podman ps -a --format '{{.Names}}' 2>/dev/null | grep -q "$name"; then
+            echo "Starting stopped container '$name'..."
+            dwt attach "$name" &
+            sleep 3
+            zellij action write-chars "exit"
+            zellij action write 13
+            wait
+          else
+            echo "Creating dwt environment '$name'..."
+
+            # Background watcher: auto-detach from the tmux session once the
+            # container is running so the function can continue.
+            (
+              while ! podman ps --format '{{.Names}}' 2>/dev/null | grep -q "$name"; do
+                sleep 1
+              done
+              sleep 3
+              zellij action write-chars "exit"
+              zellij action write 13
+            ) &
+            local watcher_pid=$!
+
+            dwt create "$name"
+
+            kill $watcher_pid 2>/dev/null
+            wait $watcher_pid 2>/dev/null
+          fi
+
+          echo "Opening zellij workspace..."
+
+          zellij action new-tab --layout "$layout" --name "$name"
+
+          sleep 3
+
+          # Left pane (editor): start nvim
+          zellij action move-focus left
+          zellij action write-chars "nvim ."
+          zellij action write 13
+
+          # Bottom-right pane (claude): start claude code
+          zellij action move-focus right
+          zellij action move-focus down
+          zellij action write-chars "claude --name $name --permission-mode auto --model opus"
+          zellij action write 13
+
+          # Focus stays on the bottom-right claude pane
+
+          rm -f "$layout"
+        }
       '')
     ];
     envExtra = lib.mkIf (mode == "work") ''

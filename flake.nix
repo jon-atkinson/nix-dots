@@ -93,17 +93,17 @@
           mkNixosSystem "personal" "x86_64-linux"
             [ ./hosts/nixos-laptop.nix ]
             [ ./home/nixos/hyprland.nix ./home/personal/git.nix ];
-        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
+        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ];
       };
 
       homeConfigurations = {
         darwin-personal = mkHomeConfig "personal" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/personal/ssh.nix ./home/personal/git.nix ];
-        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
+        darwin-work = mkHomeConfig "work" "aarch64-darwin" "Jon" "/Users/Admin/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ];
 
         linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ./home/personal/git.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ];
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ];
       };
     };
 }
