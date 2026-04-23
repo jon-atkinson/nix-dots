@@ -83,9 +83,14 @@
 
           DWT_NAME="$name" envsubst '$DWT_NAME' < "$layout_template" > "$layout"
 
-          if podman ps --format '{{.Names}}' 2>/dev/null | grep -q "$name"; then
+          local dwt_status=""
+          if dwt ls 2>/dev/null | grep -q "^$name .*running"; then dwt_status="running"
+          elif dwt ls 2>/dev/null | grep -q "^$name .*stopped"; then dwt_status="stopped"
+          fi
+
+          if [[ "$dwt_status" == "running" ]]; then
             echo "Container '$name' is already running, skipping creation."
-          elif podman ps -a --format '{{.Names}}' 2>/dev/null | grep -q "$name"; then
+          elif [[ "$dwt_status" == "stopped" ]]; then
             echo "Starting stopped container '$name'..."
             dwt attach "$name" &
             sleep 3
@@ -96,21 +101,34 @@
             echo "Creating dwt environment '$name'..."
 
             # Background watcher: auto-detach from the tmux session once the
-            # container is running so the function can continue.
+            # container is fully set up (tmux session attached, meaning dwt
+            # create has finished cloning and container setup).
             (
-              while ! podman ps --format '{{.Names}}' 2>/dev/null | grep -q "$name"; do
+              while ! dwt ls 2>/dev/null | grep -q "^$name .*running"; do
                 sleep 1
               done
-              sleep 3
+              local container
+              container=$(dwt ls 2>/dev/null | grep "^$name " | tr -s ' ' | cut -d' ' -f2)
+              while ! podman exec "$container" tmux list-sessions 2>/dev/null | grep -q "attached"; do
+                sleep 1
+              done
+              sleep 1
               zellij action write-chars "exit"
               zellij action write 13
             ) &
             local watcher_pid=$!
 
             dwt create "$name"
+            local create_exit=$?
 
             kill $watcher_pid 2>/dev/null
             wait $watcher_pid 2>/dev/null
+
+            if [[ $create_exit -ne 0 ]] || ! dwt ls 2>/dev/null | grep -q "^$name .*running"; then
+              echo "error: dwt create failed for '$name'"
+              rm -f "$layout"
+              return 1
+            fi
           fi
 
           echo "Opening zellij workspace..."
@@ -118,11 +136,6 @@
           zellij action new-tab --layout "$layout" --name "$name"
 
           sleep 3
-
-          # Left pane (editor): start nvim
-          zellij action move-focus left
-          zellij action write-chars "nvim ."
-          zellij action write 13
 
           # Bottom-right pane (claude): start claude code
           zellij action move-focus right
@@ -133,13 +146,10 @@
           # Automate claude onboarding if this is a fresh container:
           # 1. Select "5. Dark Mode (ANSI colors only)"
           # 2. Select "1. Claude account with subscription"
-          # 3. Press "c" to copy the auth code to clipboard
           sleep 5
           zellij action write-chars "5"
-          sleep 2
+          sleep 1
           zellij action write-chars "1"
-          sleep 3
-          zellij action write-chars "c"
 
           # Focus stays on the bottom-right claude pane
 
