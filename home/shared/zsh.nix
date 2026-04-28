@@ -239,7 +239,7 @@
       export PATH=$HOME/.dotnet:$PATH
       export VIVSPACK_ROOT=$HOME/repo/vivspack
       export NECTAR_DIR=$HOME/repo/nectar
-      export KDB_DIR=~/olympus/data/kdb
+      export KDB_DIR=/data/kdb
       export RESEARCH_DIR=~/olympus/data/research
       export KDB_PROD_HOST=sy2-oly-app1
       export KDB_PROD_DIR=/prod/kdb
