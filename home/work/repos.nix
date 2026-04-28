@@ -103,6 +103,7 @@ in
         };
     };
   };
+
   home.file.".local/share/applications/remmina.desktop".text = ''
     [Desktop Entry]
     Name=Remmina
@@ -113,16 +114,20 @@ in
     Type=Application
     Categories=Network;RemoteAccess
   '';
+
+  home.activation.ensureSecretDirs = lib.hm.dag.entryBefore [ "sops-nix" ] ''
+    run mkdir -p "${homeDir}/etc"
+    run mkdir -p "${homeDir}/.dwt"
+    run mkdir -p "${homeDir}/.local/share/remmina"
+  '';
   sops.secrets."remmina_pc331" = {
       path = "${homeDir}/.local/share/remmina/group_rdp_pc331-(jon-windows-box)_pc331-vivcourt-com.remmina";
       mode = "0600";
   };
-
   sops.secrets."dwt_config" = {
     path = "${homeDir}/.dwt/dwt.yaml";
     mode = "0600";
   };
-
   sops.secrets."zbx" = {
     path = "${homeDir}/zbx";
     mode = "0600";
@@ -130,6 +135,10 @@ in
   sops.secrets."kdb" = {
     path = "${homeDir}/kdb";
     mode = "0600";
+  };
+  sops.secrets."datascope" = {
+      path = "${homeDir}/etc/rth.yaml";
+      mode = "0600";
   };
 
   home.file."bin/work-setup.sh" = {
