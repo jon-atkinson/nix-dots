@@ -38,6 +38,8 @@
 
     # work containerisation
     podman
+
+    zlib
   ];
 
   targets.genericLinux.enable = pkgs.stdenv.isLinux;
