@@ -1,6 +1,7 @@
 {
   mode,
   lib,
+  pkgs,
   ...
 }:
 
@@ -233,19 +234,24 @@
         }
       '')
     ];
-    envExtra = lib.mkIf (mode == "work") ''
-      source $HOME/zbx
-      source $HOME/kdb
-      export PATH=$HOME/.dotnet:$PATH
-      export VIVSPACK_ROOT=$HOME/repo/vivspack
-      export NECTAR_DIR=$HOME/repo/nectar
-      export KDB_DIR=/data/kdb
-      export RESEARCH_DIR=~/olympus/data/research
-      export KDB_PROD_HOST=sy2-oly-app1
-      export KDB_PROD_DIR=/prod/kdb
-      export KDB_DATA_HOST=sy2-oly-app2
-      export KDB_DATA_DIR=/data/kdb
-      export KDB_DATA_USER=olympusdata
-    '';
+    envExtra = lib.mkMerge [
+      ''
+        export LD_LIBRARY_PATH=${lib.makeLibraryPath (with pkgs; [ zlib snappy lz4 zstd ])}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+      ''
+      (lib.mkIf (mode == "work") ''
+        source $HOME/zbx
+        source $HOME/kdb
+        export PATH=$HOME/.dotnet:$PATH
+        export VIVSPACK_ROOT=$HOME/repo/vivspack
+        export NECTAR_DIR=$HOME/repo/nectar
+        export KDB_DIR=/data/kdb
+        export RESEARCH_DIR=~/olympus/data/research
+        export KDB_PROD_HOST=sy2-oly-app1
+        export KDB_PROD_DIR=/prod/kdb
+        export KDB_DATA_HOST=sy2-oly-app2
+        export KDB_DATA_DIR=/data/kdb
+        export KDB_DATA_USER=olympusdata
+      '')
+    ];
   };
 }

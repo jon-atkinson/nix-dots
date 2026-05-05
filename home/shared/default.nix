@@ -39,7 +39,11 @@
     # work containerisation
     podman
 
+    # compression libs 
     zlib
+    snappy
+    lz4
+    zstd
   ];
 
   targets.genericLinux.enable = pkgs.stdenv.isLinux;
