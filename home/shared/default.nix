@@ -38,6 +38,9 @@
 
     # work containerisation
     podman
+    
+    # work clipboard util
+    xclip
 
     # compression libs 
     zlib
