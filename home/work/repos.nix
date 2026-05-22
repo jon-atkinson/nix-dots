@@ -57,12 +57,17 @@ in
         rm -rf "$_q32_tmp"
       fi
 
-      # Symlink nectar bin utilities
+      # Symlink nectar bin utilities. q32 is excluded so the
+      # nix-managed wrapper in home/work/q32.nix wins on PATH —
+      # the nectar wrapper omits 32-bit zlib from LD_LIBRARY_PATH.
       if [ -d "${repoDir}/nectar/var/common/bin" ]; then
         run mkdir -p "${homeDir}/bin"
         for f in "${repoDir}/nectar/var/common/bin/"*; do
-          ln -sf "$f" "${homeDir}/bin/$(basename "$f")"
+          base=$(basename "$f")
+          [ "$base" = "q32" ] && continue
+          ln -sf "$f" "${homeDir}/bin/$base"
         done
+        [ -L "${homeDir}/bin/q32" ] && rm "${homeDir}/bin/q32"
       fi
 
       # On rebuild with existing nectar: update conda environment

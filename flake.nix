@@ -93,7 +93,7 @@
           mkNixosSystem "personal" "x86_64-linux"
             [ ./hosts/nixos-laptop.nix ]
             [ ./home/nixos/hyprland.nix ./home/personal/git.nix ];
-        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ];
+        linux-wsl-work = mkNixosSystem "work" "x86_64-linux" [ ] [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ./home/work/q32.nix ];
       };
 
       homeConfigurations = {
@@ -103,7 +103,7 @@
         linux-personal = mkHomeConfig "personal" "x86_64-linux" "jon" "/home/jon/" [ ./home/personal/ssh.nix ./home/personal/git.nix ];
         # standalone pc - username=jonathan
         # linux-work = mkHomeConfig "work" "x86_64-linux" "jonathan" "/home/jonathan/";
-        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ];
+        linux-work = mkHomeConfig "work" "x86_64-linux" "jon" "/home/jon/" [ ./home/work/ssh.nix ./home/work/repos.nix ./home/work/git.nix ./home/work/feature.nix ./home/work/q32.nix ];
       };
     };
 }
