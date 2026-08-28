@@ -7,12 +7,19 @@ let
   ssh = "${pkgs.openssh}/bin/ssh";
 
   repos = [
-    "nectar"
+    "nix-dots"
     "dwt"
-    "vivspack"
+    "nectar"
+    "sparta"
+    "olympus"
+    "lighthouse"
     "chakra"
     "deployment"
+    "vivspack"
+    "glue"
+    "viv"
   ];
+
 
   cloneScript = lib.concatMapStringsSep "\n" (name: ''
     if [ ! -d "${repoDir}/${name}" ]; then
