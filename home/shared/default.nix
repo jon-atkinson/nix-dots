@@ -36,6 +36,7 @@
     rustup
     maven
     go
+    valgrind
 
     # work containerisation
     podman
